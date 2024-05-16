@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark" id="html" data-bs-core="modern">
+<head>
+    <!-- Below this is the provided head -->
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} NO TITLE PROVIDED!! {% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/halfmoon@2.0.1/css/halfmoon.min.css" rel="stylesheet" integrity="sha256-SsJizWSIG9JT9Qxbiy8xnYJfjCAkhEQ0hihxRn7jt2M=" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/halfmoon@2.0.1/css/cores/halfmoon.modern.css" rel="stylesheet" integrity="sha256-DD6elX+jPmbFYPsGvzodUv2+9FHkxHlVtQi0/RJVULs=" crossorigin="anonymous">
+    {% endblock %}
+    <!-- Above this is the provided head -->
+    <!-- Here begins some default JS (theme switch, etc) -->
+        <script>
+            function change_theme(theme){
+                var tag = document.getElementById("html")
+                tag.setAttribute("data-bs-theme",theme)
+            }
+
+            function toggle_theme(){
+                var current = document.getElementById("html").getAttribute("data-bs-theme")
+                if (current == "dark"){
+                    change_theme("light")
+                } else {
+                    change_theme("dark")
+                }
+            }
+        </script>
+    <!-- Ending default JS -->
+</head>
+<body>
+    {% block content %}
+    <h1>NO CONTENT BLOCK PROVIDED!!</h1>
+    {% endblock %}
+</body>
+</html>

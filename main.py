@@ -1,6 +1,19 @@
 from flask import Flask, render_template
+from flask_apscheduler import APScheduler
+from pony.orm import *
+
+class Config:
+    SCHEDULER_API_ENABLED = True
 
 app = Flask(__name__)
+app.config.from_object(Config())
+
+scheduler = APScheduler()
+
+db = Database()
+
+db.bind(provider="sqlite", filename="main.db")
+
 
 @app.route("/")
 def index():

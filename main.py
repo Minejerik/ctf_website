@@ -5,6 +5,7 @@ from pony.flask import Pony
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user
 from uuid import UUID, uuid4
 from flask_bcrypt import Bcrypt
+import nh3
 
 
 class Config:
@@ -28,8 +29,6 @@ Pony(app)
 
 ## DB models
 
-
-
 class User(db.Entity, UserMixin):
     id = PrimaryKey(int, auto=True)
     solves = Set('Solve')
@@ -41,13 +40,10 @@ class User(db.Entity, UserMixin):
     def get_id(self):
         return self.user_id
 
-
-
 class Solve(db.Entity):
     id = PrimaryKey(int, auto=True)
     solver = Required(User)
     challenge = Required('Challenge')
-
 
 class Challenge(db.Entity):
     id = PrimaryKey(int, auto=True)
@@ -91,13 +87,24 @@ def settings():
             if temp:
                 return render_template("settings.html", error="Username already taken!")
             else:
+                if nh3.is_html(request.form.get("username")):
+                    return render_template("settings.html", error="Username contains HTML!")
                 current_user.username = request.form.get("username")
+        if request.form.get('newPassword1') != "":
+            if request.form.get("newPassword1") != request.form.get("newPassword2"):
+                return render_template("settings.html", error="Passwords do not match!")
+            else:
+                password = bcrypt.generate_password_hash(request.form.get("newPassword1"))
+                current_user.password = password
     return render_template("settings.html")
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
   # If the user made a POST request, create a new user
     if request.method == "POST":
+        name = request.form.get("username")
+        if nh3.is_html(name):
+            return render_template("register.html", error="Username contains HTML!")
         user = User(username=request.form.get("username"),
                      password=bcrypt.generate_password_hash(request.form.get("password")),
                      user_id=str(uuid4()))

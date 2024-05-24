@@ -7,6 +7,9 @@ Register
 
 {% block content %}  
 <h1>Create an account</h1>
+{% if error %}
+<h2>{{error}}</h2>
+{% endif %}
 <form action="#" method="post">
   <label for="username">Username:</label>
   <input type="text" name="username" />

@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+from functools import wraps
 from flask_apscheduler import APScheduler
 from pony.orm import *
 from pony.flask import Pony
@@ -70,6 +71,15 @@ set_sql_debug(True)
 def load_user(user_id):
     with db_session:
         return User.get(user_id=user_id)
+    
+def admin_only(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.admin:
+            return 404
+        return f(*args, **kwargs)
+    return decorated_function
+
 
 @app.route("/")
 def index():
@@ -121,6 +131,15 @@ def register():
     # Renders sign_up template if user made a GET request
     return render_template("register.html")
 
+@app.route('/users')
+def users():
+    users = User[0:50]
+    return render_template('users.html', users=users)
+
+@app.route('/users/<page>')
+def userpage(page):
+    users = User[0:50]
+    return render_template('users.html', users=users)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

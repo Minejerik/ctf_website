@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_apscheduler import APScheduler
 from pony.orm import *
 from pony.flask import Pony
-from flask_login import LoginManager, UserMixin, login_user
+from flask_login import LoginManager, UserMixin, login_user, login_required, current_user
 from uuid import UUID, uuid4
 from flask_bcrypt import Bcrypt
 
@@ -19,6 +19,8 @@ scheduler = APScheduler()
 
 db = Database()
 
+bcrypt = Bcrypt(app)
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -33,7 +35,7 @@ class User(db.Entity, UserMixin):
     solves = Set('Solve')
     points = Required(int, default=0)
     username = Required(str)
-    password = Required(str)
+    password = Required(bytes)
     user_id = Required(str)
 
     def get_id(self):
@@ -76,14 +78,28 @@ def index():
 def about():
     return render_template("about.html")
 
-
+@login_required
+@app.route("/settings", methods=["GET", "POST"])
+def settings():
+    if request.method == "POST":
+        print(current_user)
+        print(request.form)
+        if not bcrypt.check_password_hash(current_user.password, request.form.get("currentPassword")):
+            return render_template("settings.html", error="Incorrect Password!")
+        if current_user.username != request.form.get("username"):
+            temp = User.get(username=request.form.get("username"))
+            if temp:
+                return render_template("settings.html", error="Username already taken!")
+            else:
+                current_user.username = request.form.get("username")
+    return render_template("settings.html")
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
   # If the user made a POST request, create a new user
     if request.method == "POST":
         user = User(username=request.form.get("username"),
-                     password=request.form.get("password"),
+                     password=bcrypt.generate_password_hash(request.form.get("password")),
                      user_id=str(uuid4()))
         # Add the user to the database
         commit()
@@ -104,7 +120,7 @@ def login():
         user = User.get(username = request.form.get("username"))
         # Check if the password entered is the 
         # same as the user's password
-        if user.password == request.form.get("password"):
+        if bcrypt.check_password_hash(user.password, request.form.get("password")):
             # Use the login_user method to log in the user
             login_user(user)
             return redirect(url_for("index"))

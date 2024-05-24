@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+
+{% block content %}  
+<br><br><br>
+<div class="container">
+    <h1 class="text-center">Settings</h1>
+    {% if error %}
+    <h2>{{error}}</h2>
+    {% endif %}
+    <div class="row">
+        <div class="col">
+          <form action="" method="post">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" value="{{current_user.username}}" name="username">
+            </div>
+            <div class="mb-3">
+              <label for="currentPassword" class="form-label">Current Password</label>
+              <input type="password" class="form-control" id="currentPassword" name="currentPassword">
+            </div>
+            <div class="mb-3">
+              <label for="newPassword1" class="form-label">New Password</label>
+              <input type="password" class="form-control" id="newPassword1" name="newPassword1">
+            </div>
+            <div class="mb-3">
+              <label for="newPassword2" class="form-label">Confirm New Password</label>
+              <input type="password" class="form-control" id="newPassword2" name="newPassword2">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

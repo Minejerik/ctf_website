@@ -2,10 +2,11 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_apscheduler import APScheduler
 from pony.orm import *
 from pony.flask import Pony
-from flask_login import LoginManager, UserMixin, login_user, login_required, current_user
+from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, AnonymousUserMixin
 from uuid import UUID, uuid4
 from flask_bcrypt import Bcrypt
 import nh3
+
 
 
 class Config:
@@ -16,6 +17,7 @@ app.config.from_object(Config())
 
 app.config["SECRET_KEY"] = "upouuoiuo89279798723kjhskldfhfbccvhauiy89ywuyoi;wjdfl;jasdldfkasuiou27SAGGASJDGAHlkjf"
 
+
 scheduler = APScheduler()
 
 db = Database()
@@ -24,6 +26,8 @@ bcrypt = Bcrypt(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.anonymous_user = AnonymousUserMixin
+login_manager.login_view = "/login"
 
 Pony(app)
 
@@ -36,6 +40,7 @@ class User(db.Entity, UserMixin):
     username = Required(str)
     password = Required(bytes)
     user_id = Required(str)
+    admin = Required(bool, default=False)
 
     def get_id(self):
         return self.user_id
@@ -74,8 +79,8 @@ def index():
 def about():
     return render_template("about.html")
 
-@login_required
 @app.route("/settings", methods=["GET", "POST"])
+@login_required
 def settings():
     if request.method == "POST":
         print(current_user)
@@ -125,12 +130,16 @@ def login():
         # user = User.query.filter_by(
         #     username=request.form.get("username")).first()
         user = User.get(username = request.form.get("username"))
+        if not user:
+            return render_template("login.html", error="Incorrect user or password")
         # Check if the password entered is the 
         # same as the user's password
         if bcrypt.check_password_hash(user.password, request.form.get("password")):
             # Use the login_user method to log in the user
             login_user(user)
             return redirect(url_for("index"))
+        else:
+            return render_template("login.html", error="Incorrect user or password")
         # Redirect the user back to the home
         # (we'll create the home route in a moment)
     return render_template("login.html")

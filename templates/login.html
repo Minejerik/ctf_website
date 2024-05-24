@@ -5,6 +5,9 @@ Login
 {% endblock %}
 
 {% block content %}  
+{% if error %}
+{{error}}
+{% endif %}
 <h1>Login to your account</h1>
 <form action="#" method="post">
     <label for="username">Username:</label>

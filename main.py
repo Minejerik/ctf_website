@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from functools import wraps
 from flask_apscheduler import APScheduler
+from datetime import datetime
 from pony.orm import *
 from pony.flask import Pony
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, AnonymousUserMixin
@@ -50,6 +51,7 @@ class Solve(db.Entity):
     id = PrimaryKey(int, auto=True)
     solver = Required(User)
     challenge = Required('Challenge')
+    solvetime = Required(datetime)
 
 class Challenge(db.Entity):
     id = PrimaryKey(int, auto=True)
@@ -57,6 +59,7 @@ class Challenge(db.Entity):
     solve_count = Optional(int)
     solves = Set(Solve)
     points = Optional(int)
+    name = Required(str)
 
 db.bind(provider="sqlite", filename="main.db", create_db=True)
 
@@ -133,12 +136,12 @@ def register():
 
 @app.route('/users')
 def users():
-    users = User[0:50]
+    users = User.select()[0:50]
     return render_template('users.html', users=users)
 
 @app.route('/users/<page>')
 def userpage(page):
-    users = User[0:50]
+    users = User[0*page:50*page]
     return render_template('users.html', users=users)
 
 @app.route("/login", methods=["GET", "POST"])

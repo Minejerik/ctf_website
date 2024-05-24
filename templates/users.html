@@ -6,5 +6,16 @@ Users
 
 
 {% block content %}  
-
+<div class="container text-center">
+    <br><br>
+    <h1>Users</h1>
+    <br><br>
+    <div class="card">
+        <ul class="list-group list-group-flush">
+            {% for user in users %} 
+            <li class="list-group-item"><a href="/user/{{user.id}}">{{user.username}}</a></li>
+            {% endfor %}
+        </ul>
+      </div>
+</div>
 {% endblock %}

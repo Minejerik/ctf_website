@@ -11,11 +11,15 @@ Users
     <h1>Users</h1>
     <br><br>
     <div class="card">
+        {% if users | length > 0 %}
         <ul class="list-group list-group-flush">
             {% for user in users %} 
             <li class="list-group-item"><a href="/user/{{user.id}}">{{user.username}}</a></li>
             {% endfor %}
         </ul>
+        {% else %}
+        <h1>No Users!</h1>
+        {% endif %}
       </div>
 </div>
 {% endblock %}

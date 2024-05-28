@@ -43,6 +43,7 @@ class User(db.Entity, UserMixin):
     password = Required(bytes)
     user_id = Required(str)
     admin = Required(bool, default=False)
+    hidden = Required(bool, default=False)
 
     def get_id(self):
         return self.user_id
@@ -100,7 +101,7 @@ def about():
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for(index))
+    return redirect(url_for("index"))
 
 @app.route("/settings", methods=["GET", "POST"])
 @login_required
@@ -146,12 +147,12 @@ def register():
 
 @app.route('/users')
 def users():
-    users = User.select()[0:50]
+    users = User.select(hidden=False)[0:50]
     return render_template('users.html', users=users)
 
 @app.route('/users/<page>')
 def userpage(page):
-    users = User[0*page:50*page]
+    users = select(hidden=False)[0*page:50*page]
     return render_template('users.html', users=users)
 
 @app.route('/user/<id>')

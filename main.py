@@ -33,6 +33,19 @@ login_manager.login_view = "/login"
 
 Pony(app)
 
+## START DATE
+START_DATE = datetime.fromisoformat('2024-09-20T20:00:00.0') 
+END_DATE = datetime.fromisoformat('2024-09-22T20:00:00.0') 
+
+
+
+STARTED = (datetime.now() >= START_DATE)
+
+@scheduler.task('interval', id='do_job_1', seconds=10)
+def check_if_started():
+    global STARTED
+    STARTED = (datetime.now() >= START_DATE)
+
 ## DB models
 
 class User(db.Entity, UserMixin):

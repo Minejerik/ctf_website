@@ -74,8 +74,10 @@ db.generate_mapping(create_tables=True)
 set_sql_debug(True)
 
 ## START DATE
-START_DATE = datetime.fromisoformat('2024-09-20T20:00:00.0') 
-END_DATE = datetime.fromisoformat('2024-09-22T20:00:00.0') 
+## MAKE SURE TO RUN add_dates.py otherwise this won't work!!!
+with db_session:
+    START_DATE = list(Date.select(name="start"))[0].date
+    END_DATE = list(Date.select(name="end"))[0].date
 
 STARTED = (datetime.now() >= START_DATE)
 

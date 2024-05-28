@@ -84,15 +84,23 @@ def admin_only(f):
         return f(*args, **kwargs)
     return decorated_function
 
+@app.template_filter('pluralize')
+def pluralize(number, singular = '', plural = 's'):
+    if number == 1:
+        return singular
+    else:
+        return plural
+
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
-@app.route("/test")
+@app.route("/admin")
 @admin_only
-def test():
-    return "TEST"
+def adminindex():
+    users = list(User.select())
+    return render_template("admin/index.html", users=users)
 
 @app.route("/about")
 def about():

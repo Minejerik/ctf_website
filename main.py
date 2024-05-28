@@ -132,8 +132,16 @@ def adminindex():
 @app.route("/admin/etc", methods=["POST", "GET"])
 @admin_only
 def adminetc():
-    if request.method == "post":
-        print(request.form())
+    global START_DATE
+    global END_DATE
+    if request.method == "POST":
+        start = list(Date.select(name="start"))[0]
+        end = list(Date.select(name="end"))[0]
+        start.date = datetime.fromisoformat(request.form["start_time_and_date"])
+        end.date = datetime.fromisoformat(request.form["end_time_and_date"])
+        START_DATE = datetime.fromisoformat(request.form["start_time_and_date"])
+        END_DATE = datetime.fromisoformat(request.form["end_time_and_date"])
+        commit()
     users = list(User.select())
     return render_template("admin/etc.html", users=users)
 

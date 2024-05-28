@@ -32,7 +32,16 @@ Admin
           </div>
       </div>
       <div class="col">
-        Column
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">General Stats: </h5>
+              <p class="card-text">
+                Challenge Count: {{challenges | length}}<br>
+                Solve Count: {{solves | length}} <br>
+                Average Score: {{avg_score}}
+              </p>
+            </div>
+        </div>
       </div>
     </div>
   </div>

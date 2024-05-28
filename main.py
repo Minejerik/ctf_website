@@ -127,7 +127,10 @@ def index():
 @admin_only
 def adminindex():
     users = list(User.select())
-    return render_template("admin/index.html", users=users)
+    solves = list(Solve.select())
+    challenges = list(Challenge.select())
+    avg_score = avg(u.points for u in User)
+    return render_template("admin/index.html", users=users, solves=solves, challenges=challenges, avg_score=avg_score)
 
 @app.route("/admin/etc", methods=["POST", "GET"])
 @admin_only
@@ -142,8 +145,7 @@ def adminetc():
         START_DATE = datetime.fromisoformat(request.form["start_time_and_date"])
         END_DATE = datetime.fromisoformat(request.form["end_time_and_date"])
         commit()
-    users = list(User.select())
-    return render_template("admin/etc.html", users=users)
+    return render_template("admin/etc.html")
 
 @app.route("/about")
 def about():

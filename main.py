@@ -4,7 +4,7 @@ from flask_apscheduler import APScheduler
 from datetime import datetime
 from pony.orm import *
 from pony.flask import Pony
-from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, AnonymousUserMixin
+from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, AnonymousUserMixin, logout_user
 from uuid import UUID, uuid4
 from flask_bcrypt import Bcrypt
 import nh3
@@ -96,6 +96,11 @@ def test():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for(index))
 
 @app.route("/settings", methods=["GET", "POST"])
 @login_required

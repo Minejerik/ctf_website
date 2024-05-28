@@ -71,7 +71,7 @@ db.bind(provider="sqlite", filename="main.db", create_db=True)
 
 db.generate_mapping(create_tables=True)
 
-set_sql_debug(True)
+# set_sql_debug(True)
 
 ## START DATE
 ## MAKE SURE TO RUN add_dates.py otherwise this won't work!!!
@@ -128,6 +128,14 @@ def index():
 def adminindex():
     users = list(User.select())
     return render_template("admin/index.html", users=users)
+
+@app.route("/admin/etc", methods=["POST", "GET"])
+@admin_only
+def adminetc():
+    if request.method == "post":
+        print(request.form())
+    users = list(User.select())
+    return render_template("admin/etc.html", users=users)
 
 @app.route("/about")
 def about():

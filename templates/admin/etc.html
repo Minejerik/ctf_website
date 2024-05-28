@@ -1,0 +1,19 @@
+{% extends 'admin/adminbase.html' %}
+
+{% block title %}
+Admin ETC
+{% endblock %}
+
+
+{% block content %}
+<br><br>
+<div class="container">
+    <form action="/admin/etc" method="post">
+        <label class="form-control" for="start_time_and_date">Start time and date:</label><br>
+        <input class="form-control" type="datetime-local" name="start_time_and_date" id="start_time_and_date" value="{{start.isoformat()}}"><br><br>
+        <label class="form-control" for="end_time_and_date">End time and date:</label><br>
+        <input class="form-control" type="datetime-local" name="end_time_and_date" id="end_time_and_date" value="{{end.isoformat()}}"><br><br>
+        <input class="form-control" type="submit" value="submit">
+    </form>
+</div>
+{% endblock %}

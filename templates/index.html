@@ -14,9 +14,15 @@ Home
     <br>
     <h2 id="demo">TIMER</h2>
 
+    {% if not started %}
+        {% set time = start %}
+    {% else %}
+        {% set time = end %}
+    {% endif %}
+
     <script>
         // Set the date we're counting down to
-        var countDownDate = new Date("Sept 20, 2024 20:0:0").getTime();
+        var countDownDate = new Date("{{time.strftime('%b %d, %Y %-H:%-M:%-S')}}").getTime();
 
         // Update the count down every 1 second
         var x = setInterval(function() {

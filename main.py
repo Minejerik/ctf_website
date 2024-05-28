@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, abort
 from functools import wraps
 from flask_apscheduler import APScheduler
 from datetime import datetime
@@ -78,8 +78,8 @@ def load_user(user_id):
 def admin_only(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if not current_user.admin:
-            return 404
+        if isinstance(current_user, AnonymousUserMixin) or not current_user.admin:
+            abort(404)
         return f(*args, **kwargs)
     return decorated_function
 
@@ -87,6 +87,11 @@ def admin_only(f):
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/test")
+@admin_only
+def test():
+    return "TEST"
 
 @app.route("/about")
 def about():
@@ -143,6 +148,14 @@ def users():
 def userpage(page):
     users = User[0*page:50*page]
     return render_template('users.html', users=users)
+
+@app.route('/user/<id>')
+def userbyid(id):
+    user = User[int(id)]
+    if not user:
+        abort(404)
+    solves = list(user.solves)
+    return render_template('usertag.html', user=user, solves=solves)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

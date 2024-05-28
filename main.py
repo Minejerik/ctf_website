@@ -37,14 +37,20 @@ Pony(app)
 START_DATE = datetime.fromisoformat('2024-09-20T20:00:00.0') 
 END_DATE = datetime.fromisoformat('2024-09-22T20:00:00.0') 
 
-
-
 STARTED = (datetime.now() >= START_DATE)
 
 @scheduler.task('interval', id='do_job_1', seconds=10)
 def check_if_started():
     global STARTED
     STARTED = (datetime.now() >= START_DATE)
+
+@app.context_processor
+def inject_data():
+    return dict(
+        start=START_DATE,
+        end=END_DATE,
+        started=STARTED
+    )   
 
 ## DB models
 

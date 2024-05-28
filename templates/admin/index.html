@@ -23,8 +23,11 @@ Admin
         <div class="card" style="width: 18rem;">
             <div class="card-body">
               <h5 class="card-title">Time Left: </h5>
-              <h6 class="card-subtitle mb-2 text-body-secondary">{{users | length}} User{{users | length | pluralize}}</h6>
-              <p class="card-text">The current user count, including admins & hidden users.</p>
+              <h6 class="card-subtitle mb-2 text-body-secondary" id="demo"></h6>
+              <p class="card-text">If it has not started it is the time until it starts, and if it has it is the time until it ends. <br>
+                As of now the ctf {{ "has" if started else "has not" }} started and it is counting down to the {{ "end" if started else "start" }} of the ctf.
+              </p>
+              <a href="/admin/etc" class="card-link">More time info</a>
             </div>
           </div>
       </div>
@@ -33,4 +36,42 @@ Admin
       </div>
     </div>
   </div>
+
+  {% if not started %}
+  {% set time = start %}
+  {% else %}
+  {% set time = end %}
+  {% endif %}
+  <script>
+    // Set the date we're counting down to
+    // var countDownDate = new Date("Sept 20, 2024 20:0:0").getTime();
+    var countDownDate = new Date("{{time.strftime('%b %d, %Y %-H:%-M:%-S')}}").getTime();
+
+
+    // Update the count down every 1 second
+    var x = setInterval(function() {
+
+    // Get today's date and time
+    var now = new Date().getTime();
+
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
+
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Display the result in the element with id="demo"
+    document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+    + minutes + "m " + seconds + "s ";
+
+    // If the count down is finished, write some text
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "EXPIRED";
+    }
+    }, 1000);
+</script>
 {% endblock %}

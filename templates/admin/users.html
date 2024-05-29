@@ -1,0 +1,29 @@
+{% extends 'admin/adminbase.html' %}
+
+{% block title %}
+Admin Users
+{% endblock %}
+
+
+{% block content %}
+<div class="container text-center">
+    <br><br>
+    <h1>Users</h1>
+    <br><br>
+    <div class="card">
+        {% if users | length > 0 %}
+        <ul class="list-group list-group-flush">
+            {% for user in users %} 
+            <li class="list-group-item">
+                <p>{{user.username}}</p>
+                <a href="/user/{{user.id}}">Regular Link</a>
+                <a href="/admin/user/{{user.id}}">Admin Link</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <h1>No Users!</h1>
+        {% endif %}
+      </div>
+</div>
+{% endblock %}

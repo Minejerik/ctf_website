@@ -132,6 +132,12 @@ def adminindex():
     avg_score = avg(u.points for u in User)
     return render_template("admin/index.html", users=users, solves=solves, challenges=challenges, avg_score=avg_score)
 
+@app.route("/admin/users")
+@admin_only
+def adminindex():
+    users = list(User.select())
+    return render_template("admin/users.html", users=users)
+
 @app.route("/admin/etc", methods=["POST", "GET"])
 @admin_only
 def adminetc():

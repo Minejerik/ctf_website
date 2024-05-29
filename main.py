@@ -9,14 +9,13 @@ from uuid import UUID, uuid4
 from flask_bcrypt import Bcrypt
 import nh3
 import os
-from dotenv import load_dotenv
 
 ## CHANGE LATER!!!
 ## TODO: REMEMBER
 DEBUG_MODE = True
 
 if DEBUG_MODE:
-    from flask_profiler import Profiler
+    from dotenv import load_dotenv
     load_dotenv()
 
 
@@ -29,32 +28,11 @@ app.config.from_object(Config())
 
 app.config["SECRET_KEY"] = "upouuoiuo89279798723kjhskldfhfbccvhauiy89ywuyoi;wjdfl;jasdldfkasuiou27SAGGASJDGAHlkjf"
 
-if DEBUG_MODE:
-    app.config["flask_profiler"] = {
-        "enabled": app.config["DEBUG"],
-        "storage": {
-            "engine": "sqlite"
-        },
-        "basicAuth":{
-            "enabled": True,
-            "username": os.environ["USERNAME"],
-            "password": os.environ["PASSWORD"]
-        },
-        "ignore": [
-            "^/static/.*"
-        ]
-    }
-
-
 scheduler = APScheduler()
 
 db = Database()
 
 bcrypt = Bcrypt(app)
-
-if DEBUG_MODE:
-    profiler = Profiler()
-    profiler.init_app(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -274,7 +252,14 @@ def login():
         # (we'll create the home route in a moment)
     return render_template("login.html")
 
+# if DEBUG_MODE:
+#     import flask_monitoringdashboard as dashboard
+#     dashboard.config.init_from(file='dashboard.cfg')
+#     dashboard.bind(app)
 
+if DEBUG_MODE:
+    from flask_debugtoolbar import DebugToolbarExtension
+    toolbar = DebugToolbarExtension(app)
 
 if __name__ == "__main__":
     app.run(debug=True, use_evalex=False)

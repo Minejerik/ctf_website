@@ -15,9 +15,11 @@ Admin Users
         <ul class="list-group list-group-flush">
             {% for user in users %} 
             <li class="list-group-item">
-                <p>{{user.username}}</p>
-                <a href="/user/{{user.id}}">Regular Link</a>
-                <a href="/admin/user/{{user.id}}">Admin Link</a>
+                <div>
+                    {{user.username}} &nbsp;&nbsp;&nbsp;
+                    <a href="/user/{{user.id}}">Regular Link</a>&nbsp;&nbsp;&nbsp;
+                    <a href="/admin/user/{{user.id}}">Admin Link</a>
+                </div>
             </li>
             {% endfor %}
         </ul>

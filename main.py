@@ -39,6 +39,10 @@ login_manager.init_app(app)
 login_manager.anonymous_user = AnonymousUserMixin
 login_manager.login_view = "/login"
 
+if DEBUG_MODE:
+    from flask_debugtoolbar import DebugToolbarExtension
+    toolbar = DebugToolbarExtension(app)
+
 Pony(app)
 
 ## DB models
@@ -146,6 +150,14 @@ def adminuser():
     users = list(User.select())
     return render_template("admin/users.html", users=users)
 
+@app.route("/admin/user/<id>")
+@admin_only
+def adminusertag(id):
+    user = User[int(id)]
+    if not user:
+        abort(404)
+    return render_template("admin/usertag.html", user=user)
+
 @app.route("/admin/etc", methods=["POST", "GET"])
 @admin_only
 def adminetc():
@@ -220,12 +232,12 @@ def users():
 @app.route('/users/<page>')
 def userpage(page):
     users = select(hidden=False)[0*page:50*page]
-    return render_template('users.html', users=users)
+    return render_template('users.html', users=users, page=page)
 
 @app.route('/user/<id>')
 def userbyid(id):
     user = User[int(id)]
-    if not user:
+    if not user or user.hidden:
         abort(404)
     solves = list(user.solves)
     return render_template('usertag.html', user=user, solves=solves)
@@ -257,9 +269,6 @@ def login():
 #     dashboard.config.init_from(file='dashboard.cfg')
 #     dashboard.bind(app)
 
-if DEBUG_MODE:
-    from flask_debugtoolbar import DebugToolbarExtension
-    toolbar = DebugToolbarExtension(app)
 
 if __name__ == "__main__":
     app.run(debug=True, use_evalex=False)

@@ -73,6 +73,8 @@ class Challenge(db.Entity):
     solves = Set(Solve)
     points = Optional(int)
     name = Required(str)
+    desc = Required(str)
+    hidden = Required(bool, default=True)
 
 class Date(db.Entity):
     id = PrimaryKey(int, auto=True)
@@ -92,18 +94,22 @@ with db_session:
     END_DATE = list(Date.select(name="end"))[0].date
 
 STARTED = (datetime.now() >= START_DATE)
+ENDED = (STARTED and datetime.now <= END_DATE)
 
 @scheduler.task('interval', id='do_job_1', seconds=10)
 def check_if_started():
     global STARTED
+    global ENDED
     STARTED = (datetime.now() >= START_DATE)
+    ENDED = (STARTED and datetime.now <= END_DATE)
 
 @app.context_processor
 def inject_data():
     return dict(
         start=START_DATE,
         end=END_DATE,
-        started=STARTED
+        started=STARTED,
+        ended=ENDED
     )   
 
 

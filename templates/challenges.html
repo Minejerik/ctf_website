@@ -11,7 +11,21 @@ Challenges
     <div class="row">
       <div class="col-4">
         <div class="card">
-
+            <div class="card-body">
+                <h4 class="card-title">{{challenges[0].name}}</h4>
+                <p class="card-text">
+                    {{challenges[0].desc}}
+                    <hr>
+                    <br><br><br><br><br><br><br><br>
+                    <div>Solve Count: {{challenges[0].solve_count}}</div>
+                    <div>Reward: {{challenges[0].points}} points</div>
+                    <br>
+                    <div class="input-group mb-3">
+                        <input type="text" placeholder="CTF_NAME{}" class="form-control">
+                        <button type="button" class="btn btn-success">Submit</button>
+                    </div>              
+                </p>
+            </div>
         </div>
       </div>
       <div class="col-8">

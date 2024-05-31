@@ -12,13 +12,13 @@ Challenges
       <div class="col-4">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">{{challenges[0].name}}</h4>
+                <h4 class="card-title" id="currentName">{{challenges[0].name}}</h4>
                 <p class="card-text">
-                    {{challenges[0].desc}}
+                    <div id="currentDesc">{{challenges[0].desc}}</div>
                     <hr>
                     <br><br><br><br><br><br><br><br>
-                    <div>Solve Count: {{challenges[0].solve_count}}</div>
-                    <div>Reward: {{challenges[0].points}} points</div>
+                    <div id="currentSolve">Solve Count: {{challenges[0].solve_count}}</div>
+                    <div id="currentScore">Reward: {{challenges[0].points}} points</div>
                     <br>
                     <div class="input-group mb-3">
                         <input type="text" placeholder="CTF_NAME{}" class="form-control">
@@ -39,7 +39,7 @@ Challenges
                         </div>                        
                         <div class="card-body">
                             <p class="card-text">{{challenge.desc}}</p>
-                            <a href="javascript:show({{challenge.id}}, '{{challenge.name}}', '{{challenge.desc}}', {{challenge.solve_count}}, {{challenge.points}})" class="btn btn-primary stretched-link">Play</a>
+                            <a href="javascript:show({{challenge.id}}, '{{challenge.name}}', '{{challenge.desc}}', {{challenge.solve_count}}, {{challenge.points}})" class="stretched-link">Play</a>
                         </div>
                         <div class="card-footer">
                             {{challenge.solve_count}} solves {{challenge.points}} points
@@ -54,8 +54,18 @@ Challenges
 </div>  
 
 <script>
+    var current_id = parseInt("{{challenges[0].id}}")
+
     function show(id, name, desc, solvecount, points) {
-        alert(id)
+        current_id = id
+        document.getElementById("currentName").innerText = name
+        document.getElementById("currentDesc").innerText = desc
+        document.getElementById("currentSolve").innerText = "Solve Count: "+solvecount
+        document.getElementById("currentScore").innerText = "Reward: "+ points +" points"
+        // document.getElementById("currentDesc").innerText = points
+
+        
+        
     }
 </script>
 {% endblock %}

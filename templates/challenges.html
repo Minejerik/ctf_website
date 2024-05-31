@@ -29,14 +29,20 @@ Challenges
         </div>
       </div>
       <div class="col-8">
-        <div class="overflow-scroll">
+        <div class="overflow-y-scroll overflow-x-hidden">
             <div class="row">
                 {% for challenge in challenges %}
-                <div class="col-auto">
+                <div class="col-4">
                     <div class="card">
+                        <div class="card-header">
+                            {{challenge.name}}
+                        </div>                        
                         <div class="card-body">
-                            <h4 class="card-title">{{challenge.name}}</h4>
                             <p class="card-text">{{challenge.desc}}</p>
+                            <a href="javascript:show({{challenge.id}}, '{{challenge.name}}', '{{challenge.desc}}', {{challenge.solve_count}}, {{challenge.points}})" class="btn btn-primary stretched-link">Play</a>
+                        </div>
+                        <div class="card-footer">
+                            {{challenge.solve_count}} solves {{challenge.points}} points
                         </div>
                     </div>
                 </div>
@@ -48,9 +54,8 @@ Challenges
 </div>  
 
 <script>
-    function showmodal(id, name, desc, solvecount, points) {
-        const modal = document.getElementById("modal")
-        modal.modal("show")
+    function show(id, name, desc, solvecount, points) {
+        alert(id)
     }
 </script>
 {% endblock %}

@@ -29,7 +29,20 @@ Challenges
         </div>
       </div>
       <div class="col-8">
-        Column
+        <div class="overflow-scroll">
+            <div class="row">
+                {% for challenge in challenges %}
+                <div class="col-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">{{challenge.name}}</h4>
+                            <p class="card-text">{{challenge.desc}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
       </div>
     </div>
 </div>  

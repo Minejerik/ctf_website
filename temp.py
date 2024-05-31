@@ -40,8 +40,9 @@ set_sql_debug(True)
 
 
 with db_session:
-    dates = []
 
-    dates.append(Challenge(flag="B@RACKOBAMA", solve_count=140, points=150, name="TEST CHALLENGE", desc="very long testing datastring we must test and balls", hidden=False))
+    dates = []
+    for i in range(0, 150):
+        dates.append(Challenge(flag="B@RACKOBAMA", solve_count=140, points=150, name=f"TEST CHALLENGE {i}", desc="very long testing datastring we must test and balls", hidden=False))
 
     commit()

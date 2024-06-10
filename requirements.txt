@@ -1,0 +1,7 @@
+flask
+flask_apscheduler
+pony
+flask_login
+uuid
+flask_bcrypt
+nh3

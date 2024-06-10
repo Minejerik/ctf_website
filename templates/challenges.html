@@ -8,6 +8,9 @@ Challenges
 {% block content %}
 <br><br>
 <div class="container text-center">
+    {% if challenges|length < 1 %}
+        <h1 class="py-5 display-1">No challenges available</h1>
+    {% else %}
     <div class="row">
       <div class="col-4">
         <div class="card">
@@ -51,8 +54,10 @@ Challenges
         </div>
       </div>
     </div>
+    {% endif %}
 </div>  
 
+{% if challenges|length > 1 %}
 <script>
     var current_id = parseInt("{{challenges[0].id}}")
 
@@ -68,4 +73,5 @@ Challenges
         
     }
 </script>
+{% endif %}
 {% endblock %}

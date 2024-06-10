@@ -19,6 +19,8 @@ if DEBUG_MODE:
     load_dotenv()
 
 
+# TODO: add to config file:
+CTF_NAME = "NAME CTF"
 
 class Config:
     SCHEDULER_API_ENABLED = True
@@ -90,13 +92,16 @@ db.generate_mapping(create_tables=True)
 ## START DATE
 ## MAKE SURE TO RUN add_dates.py otherwise this won't work!!!
 with db_session:
-    START_DATE = list(Date.select(name="start"))[0].date
-    END_DATE = list(Date.select(name="end"))[0].date
+    try:
+        START_DATE = list(Date.select(name="start"))[0].date
+        END_DATE = list(Date.select(name="end"))[0].date
+    except:
+        raise Exception("RUN add_dates.py FIRST!!!")
 
 STARTED = (datetime.now() >= START_DATE)
 ENDED = (STARTED and datetime.now <= END_DATE)
 
-@scheduler.task('interval', id='do_job_1', seconds=10)
+@scheduler.task('interval', id='check_if_started_task', seconds=10)
 def check_if_started():
     global STARTED
     global ENDED
@@ -109,7 +114,8 @@ def inject_data():
         start=START_DATE,
         end=END_DATE,
         started=STARTED,
-        ended=ENDED
+        ended=ENDED,
+        ctf_name=CTF_NAME
     )   
 
 

@@ -8,7 +8,7 @@ Home
 {% block content %}  
 <br><br><br>
 <div class="container text-center">
-    <h1 class="py-5 display-1">Name CTF</h1>
+    <h1 class="py-5 display-1">{{ctf_name}}</h1>
 
     <h2>Time until the competition begins:</h2>
     <br>
@@ -22,7 +22,7 @@ Home
 
     <script>
         // Set the date we're counting down to
-        var countDownDate = new Date("{{time.strftime('%b %d, %Y %-H:%-M:%-S')}}").getTime();
+        var countDownDate = new Date("").getTime();
 
         // Update the count down every 1 second
         var x = setInterval(function() {
@@ -50,6 +50,5 @@ Home
         }
         }, 1000);
     </script>
-    <img src="https://wakapi.dev/api/badge/minejerik/interval:any/project:ctf_website" alt="wakapi">
 </div>
 {% endblock %}

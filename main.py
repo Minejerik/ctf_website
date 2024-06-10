@@ -26,7 +26,7 @@ class Config:
 app = Flask(__name__)
 app.config.from_object(Config())
 
-app.config["SECRET_KEY"] = "upouuoiuo89279798723kjhskldfhfbccvhauiy89ywuyoi;wjdfl;jasdldfkasuiou27SAGGASJDGAHlkjf"
+app.config["SECRET_KEY"] = os.environ["SECRET_KEY"]
 
 scheduler = APScheduler()
 

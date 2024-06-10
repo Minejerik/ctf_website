@@ -1,11 +1,28 @@
-# Website for Name CTF
+# Custom made CTF website
 
-[![wakatime](https://wakatime.com/badge/user/766a8d1a-ef6e-470a-a781-083a702cdaee/project/acc33e12-324f-448b-b3a9-6ad364e160b3.svg)](https://wakatime.com/badge/user/766a8d1a-ef6e-470a-a781-083a702cdaee/project/acc33e12-324f-448b-b3a9-6ad364e160b3)
+![wakapi](https://wakapi.dev/api/badge/minejerik/interval:any/project:ctf_website)
+
+Is in development and will be used for my unnamed CTF in september
 
 
-## Running
+# How to run:
+Install Requirements:
+```
+pip install -r requirements.txt
+```
 
-## ON FIRST RUN (DO NOT FORGET!!!)
-make sure to run add_dates before first run, this is needed to ensure dates are correct
+Add the dates to the database:
 
+1. Edit add_dates.py to have the dates you want
+2. Run add_dates.py
+
+Running the CTF:
+
+THESE ARE BOTH IN DEBUG MODE! DO NOT USE IN PRODUCTION!
+```
+flask --app main:app run --debug
+```
+or 
+```
 python3 main.py
+```

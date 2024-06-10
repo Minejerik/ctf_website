@@ -8,6 +8,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, cur
 from uuid import UUID, uuid4
 from flask_bcrypt import Bcrypt
 import nh3
+import json
 import os
 
 ## CHANGE LATER!!!
@@ -18,9 +19,10 @@ if DEBUG_MODE:
     from dotenv import load_dotenv
     load_dotenv()
 
+with open("config.json") as f:
+    config = json.load(f)
 
-# TODO: add to config file:
-CTF_NAME = "NAME CTF"
+CTF_NAME = config["ctf_name"]
 
 class Config:
     SCHEDULER_API_ENABLED = True

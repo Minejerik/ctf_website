@@ -20,8 +20,45 @@ sticky-top
     <input type="password" name="password" />
     <button type="submit">Submit</button>
 </form> -->
-  <div class="d-flex align-items-center justify-content-center align-self-center" style="height: 100">
+<div class="d-flex align-items-center justify-content-center align-self-center" style="height: 100">
+    <div class="card" style="margin: 14%; padding: 5px;">
 
-  </div>
+        <small class="card-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Login to your {{ctf_name}} account</small>
+
+        <div class="card-body">
+
+            <form action="#" method="post">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input
+                        type="email"
+                        class="form-control"
+                        name="email"
+                        id="email"
+                        placeholder="abc@mail.com"
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input
+                        type="password"
+                        class="form-control"
+                        name="password"
+                        id="password"
+                        placeholder=""
+                    />
+                </div>
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Submit
+                </button>
+                
+                
+            </form>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

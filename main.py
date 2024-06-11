@@ -56,6 +56,7 @@ class User(db.Entity, UserMixin):
     solves = Set('Solve')
     points = Required(int, default=0)
     username = Required(str)
+    email = Required(str)
     password = Required(bytes)
     user_id = Required(str)
     admin = Required(bool, default=False)
@@ -228,13 +229,14 @@ def register():
         if nh3.is_html(name):
             return render_template("register.html", error="Username contains HTML!")
         user = User(username=request.form.get("username"),
-                     password=bcrypt.generate_password_hash(request.form.get("password")),
-                     user_id=str(uuid4()))
+                    email=request.form.get("email"),
+                    password=bcrypt.generate_password_hash(request.form.get("password")),
+                    user_id=str(uuid4()))
         # Add the user to the database
         commit()
         # Once user account created, redirect them
         # to login route (created later on)
-        return redirect(url_for("index"))
+        return redirect(url_for("login"))
     # Renders sign_up template if user made a GET request
     return render_template("register.html")
 
@@ -268,7 +270,7 @@ def login():
     if request.method == "POST":
         # user = User.query.filter_by(
         #     username=request.form.get("username")).first()
-        user = User.get(username = request.form.get("username"))
+        user = User.get(email = request.form.get("email"))
         if not user:
             return render_template("login.html", error="Incorrect user or password")
         # Check if the password entered is the 

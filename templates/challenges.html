@@ -8,6 +8,9 @@ Challenges
 {% block content %}
 <br><br>
 <div class="container text-center">
+    {% if not started or ended %}
+        <h1 class="py-5 display-1">CTF has not started yet</h1>
+    {% else %}
     {% if challenges|length < 1 %}
         <h1 class="py-5 display-1">No challenges available</h1>
     {% else %}
@@ -54,6 +57,7 @@ Challenges
         </div>
       </div>
     </div>
+    {% endif %}
     {% endif %}
 </div>  
 

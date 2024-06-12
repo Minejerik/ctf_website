@@ -8,10 +8,7 @@ Login
 sticky-top
 {% endblock %}
 
-{% block content %}  
-{% if error %}
-{{error}}
-{% endif %}
+{% block content %}
 <!-- <h1>Login to your account</h1>
 <form action="#" method="post">
     <label for="email">Email:</label>
@@ -26,6 +23,9 @@ sticky-top
         <h6 class="card-title"><br>&nbsp;&nbsp;Login to your {{ctf_name}} account</h6>
 
         <div class="card-body">
+          {% if error %}
+          <div>{{error}}</div>
+          {% endif %}
 
             <form action="#" method="post">
                 <div class="mb-3">

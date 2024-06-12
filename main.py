@@ -228,6 +228,13 @@ def register():
         name = request.form.get("username")
         if nh3.is_html(name):
             return render_template("register.html", error="Username contains HTML!")
+        temp = User.get(username=request.form.get("username"))
+        if temp:
+            return render_template("register.html", error="Username already taken!")
+        temp = User.get(email=request.form.get("email"))
+        if temp:
+            return render_template("register.html", error="Email already used!")
+        
         user = User(username=request.form.get("username"),
                     email=request.form.get("email"),
                     password=bcrypt.generate_password_hash(request.form.get("password")),

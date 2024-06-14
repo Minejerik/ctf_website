@@ -267,7 +267,8 @@ def userpage(page):
 @app.route("/challenges")
 def challenges():
     challenges = list(Challenge.select(hidden=False))
-    return render_template("challenges.html", challenges=challenges)
+    categories = list(Category.select())
+    return render_template("challenges.html", challenges=challenges, categories=categories)
 
 @app.route('/user/<id>')
 def userbyid(id):

@@ -270,6 +270,20 @@ def challenges():
     categories = list(Category.select())
     return render_template("challenges.html", challenges=challenges, categories=categories)
 
+@app.route("/challenge/<int:id>")
+def challenge(id):
+    challenge = Challenge[id]
+    if not challenge or challenge.hidden:
+        abort(404)
+    return render_template("challenge.html", challenge = challenge)
+
+@app.route("/api/challenge/submission", methods=["POST"])
+def api_challenge_submit(id):
+    challenge = Challenge[id]
+    if not challenge or challenge.hidden:
+        abort(404)
+    return render_template("challenge.html", challenge = challenge)
+
 @app.route('/user/<id>')
 def userbyid(id):
     user = User[int(id)]

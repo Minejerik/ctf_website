@@ -80,6 +80,13 @@ class Challenge(db.Entity):
     name = Required(str)
     desc = Required(str)
     hidden = Required(bool, default=True)
+    category = Optional('Category')
+    
+class Category(db.Entity):
+    id = PrimaryKey(int, auto=True)
+    name = Required(str)
+    desc = Optional(str)
+    challenge = Set(Challenge)
 
 class Date(db.Entity):
     id = PrimaryKey(int, auto=True)

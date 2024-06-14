@@ -62,6 +62,6 @@ with db_session:
     cats = list(Category.select())
     dates = []
     for i in range(0, 15):
-        dates.append(Challenge(flag="B@RACKOBAMA", solve_count=140, points=150, name=f"TEST CHALLENGE {i}", desc="very long testing datastring we must test and balls", hidden=False, category=choice(cats)))
+        dates.append(Challenge(flag="B@RACKOBAMA", solve_count=140, points=150, name=f"TEST CHALLENGE {i}", desc="very long testing datastring we must test and balls", hidden=choice([True, False]), category=choice(cats)))
 
     commit()

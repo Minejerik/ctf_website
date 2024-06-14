@@ -19,15 +19,29 @@ Challenges
         {% for category in categories %}
             <div>
                 <h3>{{category.name}}</h3>
-                {% if category.desc %}
-                <small>{{category.desc}}</small>
-                {% endif %}
                 <br>
                 {% set chals = category.challenges | sort(attribute='id') %}
-                {% for challenge in chals %}
-                    {{challenge.name}}
-                {% endfor %}
+                <div class="row">
+                    {% for challenge in chals %}
+                        {% if not challenge.hidden %}
+                            <div class="col-sm-3" style="margin-bottom: 10px;">
+                                {# {{challenge.name}} #}
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{challenge.name}}</h5>
+                                        <p class="card-text">{{challenge.desc}}</p>
+                                        <a href="/challenge/{{challenge.id}}" class="stretched-link">Challenge page</a>
+                                    </div>
+                                    <div class="card-footer text-body-secondary">
+                                        {{challenge.points}} Points - {{challenge.solve_count}} Solves
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
+            <br>
         {% endfor %}
     {% endif %}
     {# {% endif %} #}

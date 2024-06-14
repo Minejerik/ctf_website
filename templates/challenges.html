@@ -7,13 +7,28 @@ Challenges
 
 {% block content %}
 <br><br>
-<div class="container text-center">
-    {% if not started or ended %}
+<div class="container">
+    <h1>Challenges</h1>
+    <br>
+    {# {% if not started or ended %}
         <h1 class="py-5 display-1">CTF has not started yet</h1>
-    {% else %}
+    {% else %} #}
     {% if challenges|length < 1 %}
         <h1 class="py-5 display-1">No challenges available</h1>
     {% else %}
-    
+        {% for category in categories %}
+            <div>
+                <h3>{{category.name}}</h3>
+                {% if category.desc %}
+                <small>{{category.desc}}</small>
+                {% endif %}
+                <br>
+                {% set chals = category.challenges | sort(attribute='id') %}
+                {% for challenge in chals %}
+                    {{challenge.name}}
+                {% endfor %}
+            </div>
+        {% endfor %}
     {% endif %}
+    {# {% endif %} #}
 {% endblock %}

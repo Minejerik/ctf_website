@@ -42,7 +42,7 @@ class Category(db.Entity):
     id = PrimaryKey(int, auto=True)
     name = Required(str)
     desc = Optional(str)
-    challenge = Set(Challenge)
+    challenges = Set(Challenge)
 
 db.bind(provider="sqlite", filename="main.db", create_db=True)
 
@@ -61,7 +61,7 @@ with db_session:
 with db_session:
     cats = list(Category.select())
     dates = []
-    for i in range(0, 150):
+    for i in range(0, 15):
         dates.append(Challenge(flag="B@RACKOBAMA", solve_count=140, points=150, name=f"TEST CHALLENGE {i}", desc="very long testing datastring we must test and balls", hidden=False, category=choice(cats)))
 
     commit()

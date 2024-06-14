@@ -86,7 +86,7 @@ class Category(db.Entity):
     id = PrimaryKey(int, auto=True)
     name = Required(str)
     desc = Optional(str)
-    challenge = Set(Challenge)
+    challenges = Set(Challenge)
 
 class Date(db.Entity):
     id = PrimaryKey(int, auto=True)

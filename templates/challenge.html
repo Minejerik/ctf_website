@@ -24,10 +24,9 @@ style="overflow-x: hidden;"
             </div>
 
             <div class="card-footer">
-                <form action="/api/challenge/submission" method="post" target="frame">
-                    <input type="text" name="" id="">
+                <form action="javascript:handle_submission()">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="{{flag_template}}" aria-label="flag" aria-describedby="submit">
+                        <input type="text" class="form-control" placeholder="{{flag_template}}" aria-label="flag" aria-describedby="submit" id="flag">
                         <button class="btn btn-outline-success" type="submit" id="submit">Submit</button>
                     </div>
                 </form>
@@ -36,5 +35,33 @@ style="overflow-x: hidden;"
     </div>
     <div class="col"></div>
 </div>
-<iframe name="frame" style="display: none;"></iframe>
+
+<script>
+async function handle_submission_async() {
+    const challenge_id = {{challenge.id}}
+    const flag = document.getElementById("flag")
+
+    const flag_string = flag.value
+
+    let resp = await fetch("/api/challenge/submission", {
+        method: "POST",
+        cache: "no-cache",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({id:challenge_id, flag:flag_string})
+    })
+
+    const data = await resp.json()
+
+    alert(data.message)
+
+}
+
+function handle_submission(){
+    handle_submission_async()
+}
+
+</script>
+
 {% endblock %}

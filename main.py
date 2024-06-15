@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, abort
+from flask import Flask, render_template, request, redirect, url_for, abort, jsonify
 from functools import wraps
 from flask_apscheduler import APScheduler
 from datetime import datetime
@@ -202,6 +202,7 @@ def about():
     return render_template("about.html")
 
 @app.route("/logout")
+@login_required
 def logout():
     logout_user()
     return redirect(url_for("index"))
@@ -267,12 +268,14 @@ def userpage(page):
     return render_template('users.html', users=users, page=page)
 
 @app.route("/challenges")
+@login_required
 def challenges():
     challenges = list(Challenge.select(hidden=False))
     categories = list(Category.select())
     return render_template("challenges.html", challenges=challenges, categories=categories)
 
 @app.route("/challenge/<int:id>")
+@login_required
 def challenge(id):
     challenge = Challenge[id]
     if not challenge or challenge.hidden:
@@ -280,12 +283,24 @@ def challenge(id):
     return render_template("challenge.html", challenge = challenge)
 
 @app.route("/api/challenge/submission", methods=["POST"])
+@login_required
 def api_challenge_submit():
-    id = int(request.form.get("id"))
+    print(request.json)
+    id = request.json.get("id")
     challenge = Challenge[id]
     if not challenge or challenge.hidden:
         abort(404)
-    return render_template("challenge.html", challenge = challenge)
+        
+    if request.json.get("flag") == challenge.flag:
+        if Solve.get(solver=current_user, challenge=challenge):
+            return jsonify({"message": "Already solved!"})
+        solve = Solve(solver=current_user, challenge=challenge, solvetime=datetime.now())
+        current_user.points += challenge.points
+        challenge.solve_count += 1
+        commit()
+        return jsonify({"message": "Correct!"})
+        
+    return jsonify({"message": "Incorrect!"})
 
 @app.route('/user/<id>')
 def userbyid(id):

@@ -80,6 +80,7 @@ class Challenge(db.Entity):
     solves = Set(Solve)
     points = Optional(int)
     name = Required(str)
+    slug = Required(str)
     desc = Required(str)
     hidden = Required(bool, default=True)
     category = Optional('Category')

@@ -4,6 +4,7 @@ from pony.orm import *
 from datetime import datetime
 
 from random import choice
+from slugify import slugify
 
 db = Database()
 
@@ -34,6 +35,7 @@ class Challenge(db.Entity):
     solves = Set(Solve)
     points = Optional(int)
     name = Required(str)
+    slug = Required(str)
     desc = Required(str)
     hidden = Required(bool, default=True)
     category = Optional('Category')
@@ -69,7 +71,7 @@ with db_session:
     dates = []
     for i in range(0, 15):
         
-        ch = Challenge(flag=f"flag_{i}", name=f"test_challenge_{i}", desc=f"desc_{i}", category=choice(cats), points=100, hidden=False)
+        ch = Challenge(flag=f"flag_{i}", name=f"test_challenge_{i}", desc=f"desc_{i}", category=choice(cats), points=100, hidden=False, slug=slugify(f"test_challenge_{i}"))
         dw = Downloadable(file_name=f"test_file_{i}.txt", challenge=ch)
         
         ch.downloadables.add(dw)

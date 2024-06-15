@@ -9,12 +9,13 @@ Users
 <div class="container text-center">
     <br><br>
     <h1 >{{user.username}}</h1>
+    <h2>{{user.points}} Points - {{user.solves | length}} Solves</h2>
     <br><br>
     {% if solves | length > 0 %}
     <div class="card">
         <ul class="list-group list-group-flush">
             {% for solve in solves %} 
-                <li class="list-group-item"><a href="/challenge/{{solve.challenge.id}}">{{user.username}}</a></li>
+                <li class="list-group-item"><a href="/challenge/{{solve.challenge.id}}">{{solve.challenge.name}} - solved {{solve.solvetime | naturaltime}} ({{solve.solvetime.strftime("%m/%d/%Y, %H:%M:%S")}})</a></li>
             {% endfor %}
         </ul>
     </div>

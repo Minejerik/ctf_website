@@ -9,6 +9,7 @@ from uuid import UUID, uuid4
 from flask_bcrypt import Bcrypt
 import nh3
 import json
+from humanize import naturaltime
 import os
 
 ## CHANGE LATER!!!
@@ -130,6 +131,9 @@ def inject_data():
         flag_template=flag_template
     )   
 
+@app.template_filter('naturaltime')
+def naturaltime_filter(s):
+    return naturaltime(s)
 
 ## User Functions
 

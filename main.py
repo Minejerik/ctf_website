@@ -23,6 +23,7 @@ with open("config.json") as f:
     config = json.load(f)
 
 CTF_NAME = config["ctf_name"]
+flag_template = config["flag_template"]
 
 class Config:
     SCHEDULER_API_ENABLED = True
@@ -125,7 +126,8 @@ def inject_data():
         end=END_DATE,
         started=STARTED,
         ended=ENDED,
-        ctf_name=CTF_NAME
+        ctf_name=CTF_NAME,
+        flag_template=flag_template
     )   
 
 

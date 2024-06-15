@@ -16,7 +16,15 @@
                 <h5 class="card-title">{{challenge.name}}</h5>
                 <hr>
                 <p class="card-text">{{challenge.desc}}</p>
-                
+                <form class="row g-3">
+                    <div class="col-auto">
+                        <label for="flag_text" class="visually-hidden">Password</label>
+                        <input type="text" class="form-control" id="flag_text" placeholder="{{flag_template}}">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

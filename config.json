@@ -1,3 +1,4 @@
 {
-    "ctf_name": "CTF Name"
+    "ctf_name": "CTF Name",
+    "flag_template": "CTF_NAME{}"
 }

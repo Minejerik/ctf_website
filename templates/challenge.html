@@ -18,7 +18,7 @@ style="overflow-x: hidden;"
 <br><br>
 <div class="row">
     <div class="col"></div>
-    <div class="col">
+    <div class="col-3">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">{{challenge.name}}</h5>
@@ -26,8 +26,9 @@ style="overflow-x: hidden;"
                 <p class="card-text">{{challenge.desc}}</p>
                 <br><br>
                 <p class="card-text">{{challenge.points}} Points - {{challenge.solve_count}} Solves</p>
-                {% for downloadable in challenge.downloadables %}
-                    <a class="btn btn-primary" href="/static/challenge_files/{{challenge.slug}}/{{downloadable.file_name}}" role="button">{{download|safe}} {{downloadable.file_name}}</a>
+                {% set dw = challenge.downloadables|sort(attribute="file_name")%}
+                {% for downloadable in dw %}
+                    <a class="btn btn-primary" href="/static/challenge_files/{{challenge.slug}}/{{downloadable.file_name}}" role="button" style="margin-bottom: 5px;">{{download|safe}} {{downloadable.file_name}}</a>
                 {% endfor %}
             </div>
 

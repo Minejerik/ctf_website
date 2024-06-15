@@ -72,9 +72,9 @@ with db_session:
     for i in range(0, 15):
         
         ch = Challenge(flag=f"flag_{i}", name=f"test_challenge_{i}", desc=f"desc_{i}", category=choice(cats), points=100, hidden=False, slug=slugify(f"test_challenge_{i}"))
-        dw = Downloadable(file_name=f"test_file_{i}.txt", challenge=ch)
-        
-        ch.downloadables.add(dw)
+        for i2 in range(0, 5):
+            ch.downloadables.create(file_name=f"file_{i}_{i2}")
+            
         
         dates.append(ch)
 

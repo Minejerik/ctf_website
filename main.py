@@ -165,7 +165,8 @@ def adminindex():
     users = list(User.select())
     solves = list(Solve.select())
     challenges = list(Challenge.select())
-    avg_score = avg(u.points for u in User)
+    # avg_score = avg(u.points for u in User)
+    avg_score = sum(u.points for u in users) / len(users)
     return render_template("admin/index.html", users=users, solves=solves, challenges=challenges, avg_score=avg_score)
 
 @app.route("/admin/users")

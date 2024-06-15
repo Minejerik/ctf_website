@@ -68,6 +68,12 @@ with db_session:
     cats = list(Category.select())
     dates = []
     for i in range(0, 15):
-        dates.append(Challenge(flag="B@RACKOBAMA", solve_count=140, points=150, name=f"TEST CHALLENGE {i}", desc="very long testing datastring we must test and balls", hidden=choice([True, False]), category=choice(cats)))
+        dw = Downloadable(file_name=f"test_file_{i}.txt")
+        
+        ch = Challenge(flag=f"flag_{i}", name=f"test_challenge_{i}", desc=f"desc_{i}", category=choice(cats), points=100)
+        
+        ch.downloadables.add(dw)
+        
+        dates.append(ch)
 
     commit()

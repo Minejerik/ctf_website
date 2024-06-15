@@ -30,7 +30,7 @@ class Solve(db.Entity):
 class Challenge(db.Entity):
     id = PrimaryKey(int, auto=True)
     flag = Required(str)
-    solve_count = Optional(int)
+    solve_count = Optional(int, default=0)
     solves = Set(Solve)
     points = Optional(int)
     name = Required(str)
@@ -69,7 +69,7 @@ with db_session:
     dates = []
     for i in range(0, 15):
         
-        ch = Challenge(flag=f"flag_{i}", name=f"test_challenge_{i}", desc=f"desc_{i}", category=choice(cats), points=100)
+        ch = Challenge(flag=f"flag_{i}", name=f"test_challenge_{i}", desc=f"desc_{i}", category=choice(cats), points=100, hidden=False)
         dw = Downloadable(file_name=f"test_file_{i}.txt", challenge=ch)
         
         ch.downloadables.add(dw)

@@ -5,3 +5,4 @@ flask_login
 uuid
 flask_bcrypt
 nh3
+python-slugify

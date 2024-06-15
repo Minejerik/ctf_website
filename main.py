@@ -76,7 +76,7 @@ class Solve(db.Entity):
 class Challenge(db.Entity):
     id = PrimaryKey(int, auto=True)
     flag = Required(str)
-    solve_count = Optional(int)
+    solve_count = Optional(int, default=0)
     solves = Set(Solve)
     points = Optional(int)
     name = Required(str)
@@ -315,7 +315,7 @@ def api_challenge_submit():
 
 @app.route('/user/<id>')
 def userbyid(id):
-    user = User[int(id)]
+    user = User.select(id=id).first()
     if not user or user.hidden:
         abort(404)
     solves = list(user.solves)

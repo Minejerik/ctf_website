@@ -15,7 +15,7 @@ Users
     <div class="card">
         <ul class="list-group list-group-flush">
             {% for solve in solves %} 
-                <li class="list-group-item"><a href="/challenge/{{solve.challenge.id}}">{{solve.challenge.name}} - solved {{solve.solvetime | naturaltime}} ({{solve.solvetime.strftime("%m/%d/%Y, %H:%M:%S")}})</a></li>
+                <li class="list-group-item"><a href="/challenge/{{solve.challenge.id}}">{{solve.challenge.name}} - solved {{solve.solvetime | naturaltime}} ({{solve.solvetime.strftime("%m/%d/%Y, %H:%M:%S")}}) for {{sole.challenge.points}} Points</a></li>
             {% endfor %}
         </ul>
     </div>

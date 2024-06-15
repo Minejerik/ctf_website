@@ -83,6 +83,7 @@ class Challenge(db.Entity):
     desc = Required(str)
     hidden = Required(bool, default=True)
     category = Optional('Category')
+    downloadables = Set('Downloadable')
     
 class Category(db.Entity):
     id = PrimaryKey(int, auto=True)
@@ -94,6 +95,11 @@ class Date(db.Entity):
     id = PrimaryKey(int, auto=True)
     name = Required(str)
     date = Required(datetime)
+    
+class Downloadable(db.Entity):
+    id = PrimaryKey(int, auto=True)
+    file_name = Required(str)
+    challenge = Required(Challenge)
 
 db.bind(provider="sqlite", filename="main.db", create_db=True)
 

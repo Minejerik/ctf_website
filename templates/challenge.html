@@ -4,6 +4,10 @@
 {{challenge.name}}
 {% endblock %}
 
+{% block body_style %}
+style="overflow-x: hidden;"
+{% endblock %}
+
 {% set download = '<?xml version="1.0" encoding="UTF-8"?><svg width="24px" height="24px" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#000000"><path d="M6 20L18 20" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 4V16M12 16L15.5 12.5M12 16L8.5 12.5" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>'%}
 
 {% block content %}
@@ -16,13 +20,14 @@
                 <h5 class="card-title">{{challenge.name}}</h5>
                 <hr>
                 <p class="card-text">{{challenge.desc}}</p>
-                <form class="row g-3">
-                    <div class="col-auto">
-                        <label for="flag_text" class="visually-hidden">Password</label>
-                        <input type="text" class="form-control" id="flag_text" placeholder="{{flag_template}}">
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-success">Submit</button>
+                <br><br>
+            </div>
+
+            <div class="card-footer">
+                <form action="javascript:handle_form_submit()" method="post">    
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="{{flag_template}}" aria-label="flag" aria-describedby="submit">
+                        <button class="btn btn-outline-success" type="submit" id="submit">Submit</button>
                     </div>
                 </form>
             </div>

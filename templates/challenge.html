@@ -24,7 +24,8 @@ style="overflow-x: hidden;"
             </div>
 
             <div class="card-footer">
-                <form action="javascript:handle_form_submit()" method="post">    
+                <form action="/api/challenge/submission" method="post" target="frame">
+                    <input type="text" name="" id="">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" placeholder="{{flag_template}}" aria-label="flag" aria-describedby="submit">
                         <button class="btn btn-outline-success" type="submit" id="submit">Submit</button>
@@ -35,4 +36,5 @@ style="overflow-x: hidden;"
     </div>
     <div class="col"></div>
 </div>
+<iframe name="frame" style="display: none;"></iframe>
 {% endblock %}

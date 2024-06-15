@@ -1,5 +1,6 @@
 1. finish challenges
-2. make login and register pages look good
+<!-- 2. make login and register pages look good -->
 3. finish scoreboard
 4. clean up and finish admin side
 5. make it safe
+6. add CSRF

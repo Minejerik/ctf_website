@@ -280,7 +280,8 @@ def challenge(id):
     return render_template("challenge.html", challenge = challenge)
 
 @app.route("/api/challenge/submission", methods=["POST"])
-def api_challenge_submit(id):
+def api_challenge_submit():
+    id = int(request.form.get("id"))
     challenge = Challenge[id]
     if not challenge or challenge.hidden:
         abort(404)

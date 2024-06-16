@@ -21,12 +21,10 @@ Admin Challenges
                                 {%endfor%}
                                 <li class="list-group-item">
                                     <br>
-                                    <form action="/api/admin/category/create" method="post">
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder="Category Name" aria-label="category_name" aria-describedby="submission">
-                                            <button class="btn btn-outline-secondary" type="button" id="button-submission">Add Category</button>
-                                        </div>
-                                    </form> 
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Category Name" aria-label="category_name" aria-describedby="submission" id="new_category">
+                                        <button class="btn btn-outline-secondary" type="button" id="button-submission" onclick="handle_request()">Add Category</button>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -37,4 +35,34 @@ Admin Challenges
         <div class="col"></div>
     </div>
 </div>
+<script>
+
+
+async function handle_request_async() {
+    const new_category = document.getElementById("new_category")
+
+    const new_category_string = new_category.value
+
+    let resp = await fetch("/api/admin/category/create", {
+        method: "POST",
+        cache: "no-cache",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({category_name:new_category_string})
+    })
+
+    const data = await resp.json()
+
+    alert(data.message)
+
+    location.reload()
+
+}
+
+function handle_request(){
+    handle_request_async()
+}
+
+</script>
 {% endblock %}

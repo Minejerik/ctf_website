@@ -194,6 +194,11 @@ def adminusertag(id):
         abort(404)
     return render_template("admin/usertag.html", user=user)
 
+@app.route("/admin/challenges")
+@admin_only
+def adminchallenges(id):
+    return render_template("admin/challenges.html")
+
 @app.route("/admin/etc", methods=["POST", "GET"])
 @admin_only
 def adminetc():

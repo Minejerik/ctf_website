@@ -196,8 +196,28 @@ def adminusertag(id):
 
 @app.route("/admin/challenges")
 @admin_only
-def adminchallenges(id):
-    return render_template("admin/challenges.html")
+def adminchallenges():
+    challenges = list(Challenge.select())
+    categories = list(Category.select())
+    return render_template("admin/challenges.html", challenges=challenges, categories=categories)
+
+@app.route("/api/admin/category/create", methods=["POST"])
+@admin_only
+def admincategorycreate():
+    name = request.json.get("category_name")
+    if not name:
+        return jsonify({"message": "Name required!"})
+    
+    temp = Category.get(name=name)
+    if temp:
+        return jsonify({"message": "Category already exists!"})
+    
+    category = Category(name=name)
+    commit()
+    
+    return jsonify({"message": "Category created!"})
+
+
 
 @app.route("/admin/etc", methods=["POST", "GET"])
 @admin_only

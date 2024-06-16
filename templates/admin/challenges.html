@@ -6,5 +6,35 @@ Admin Challenges
 
 
 {% block content %}
-
+<br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Categories</h5>
+                    <p class="card-body">
+                        <div class="card">
+                            <ul class="list-group list-group-flush">
+                                {% for category in categories %}
+                                <li class="list-group-item">{{category.name}}</li>
+                                {%endfor%}
+                                <li class="list-group-item">
+                                    <br>
+                                    <form action="/api/admin/category/create" method="post">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" placeholder="Category Name" aria-label="category_name" aria-describedby="submission">
+                                            <button class="btn btn-outline-secondary" type="button" id="button-submission">Add Category</button>
+                                        </div>
+                                    </form> 
+                                </li>
+                            </ul>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
 {% endblock %}

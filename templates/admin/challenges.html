@@ -42,9 +42,23 @@ Admin Challenges
                         </button>
                         </h2>
                         <div id="collapse{{challenges.index(challenge)}}" class="accordion-collapse collapse" data-bs-parent="#challengeAccordian">
-                        <div class="accordion-body">
-                            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                        </div>
+                            <div class="accordion-body">
+                                <div class="row">
+
+                                    <div class="col">
+                                        <div class="card">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">Downloadables:</li>
+                                                {% for downloadable in challenge.downloadables %}
+                                                    <li class="list-group-item"><a href="/static/challenge_files/{{challenge.slug}}/{{downloadable.file_name}}">{{downloadable.file_name}}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}

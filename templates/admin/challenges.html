@@ -32,7 +32,24 @@ Admin Challenges
                 </div>
             </div>
         </div>
-        <div class="col"></div>
+        <div class="col">
+            <div class="accordion" id="challengeAccordian">
+                {% for challenge in challenges %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{challenges.index(challenge)}}" aria-expanded="true" aria-controls="collapse{{challenges.index(challenge)}}">
+                            {{challenge.name}}
+                        </button>
+                        </h2>
+                        <div id="collapse{{challenges.index(challenge)}}" class="accordion-collapse collapse" data-bs-parent="#challengeAccordian">
+                        <div class="accordion-body">
+                            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                        </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
 <script>

@@ -217,7 +217,27 @@ def admincategorycreate():
     
     return jsonify({"message": "Category created!"})
 
-
+@app.route("/api/admin/challenge/hiddentoggle", methods=["POST"])
+@admin_only
+def adminchallengehiddentoggle():
+    
+    already_done = []
+    
+    for key in request.form:
+        
+        if key in already_done:
+            continue
+        
+        already_done.append(key)
+        
+        temp = Challenge[int(key)]
+        
+        if not temp:
+            continue
+        
+        temp.hidden = False if request.form.get(key) == "off" else True
+    
+    return redirect(url_for("adminchallenges"))
 
 @app.route("/admin/etc", methods=["POST", "GET"])
 @admin_only

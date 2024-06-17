@@ -33,7 +33,7 @@ Admin Challenges
             </div>
         </div>
         <div class="col">
-            <form action="" method="post">
+            <form action="/api/admin/challenge/hiddentoggle" method="post">
                 <div class="accordion" id="challengeAccordian">
                     {% for challenge in challenges %}
                         <div class="accordion-item">
@@ -66,7 +66,8 @@ Admin Challenges
                                                         {{challenge.points}} Points {{challenge.solve_count}} Solves
 
                                                         <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" {% if challenge.hidden %} checked {% endif %}>
+                                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" name="{{challenge.id}}" {% if challenge.hidden %} checked {% endif %}>
+                                                            <input type='hidden' value='off' name='{{challenge.id}}'>
                                                             <label class="form-check-label" for="flexSwitchCheckDefault">Hide Challenge</label>
                                                         </div>
                                                     </p>

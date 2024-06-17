@@ -54,7 +54,21 @@ Admin Challenges
                                                 {% endfor %}
                                             </ul>
                                         </div>
-
+                                    </div>
+                                    <div class="col">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h6 class="card-title">Challenge information:</h6>
+                                                <p class="card-text">
+                                                    Description: <br>
+                                                    {{challenge.desc}}<br>
+                                                    {{challenge.points}} Points {{challenge.solve_count}} Solves
+                                                </p>
+                                            </div>
+                                            <div class="card-footer text-body-secondary">
+                                                <a href="/admin/challenge/{{challenge.id}}">More information ></a>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>

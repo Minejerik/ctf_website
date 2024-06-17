@@ -33,50 +33,61 @@ Admin Challenges
             </div>
         </div>
         <div class="col">
-            <div class="accordion" id="challengeAccordian">
-                {% for challenge in challenges %}
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{challenges.index(challenge)}}" aria-expanded="true" aria-controls="collapse{{challenges.index(challenge)}}">
-                            {{challenge.name}}
-                        </button>
-                        </h2>
-                        <div id="collapse{{challenges.index(challenge)}}" class="accordion-collapse collapse" data-bs-parent="#challengeAccordian">
-                            <div class="accordion-body">
-                                <div class="row">
+            <form action="" method="post">
+                <div class="accordion" id="challengeAccordian">
+                    {% for challenge in challenges %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{challenges.index(challenge)}}" aria-expanded="true" aria-controls="collapse{{challenges.index(challenge)}}">
+                                {{challenge.name}}
+                            </button>
+                            </h2>
+                            <div id="collapse{{challenges.index(challenge)}}" class="accordion-collapse collapse" data-bs-parent="#challengeAccordian">
+                                <div class="accordion-body">
+                                    <div class="row">
 
-                                    <div class="col">
-                                        <div class="card">
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">Downloadables:</li>
-                                                {% for downloadable in challenge.downloadables %}
-                                                    <li class="list-group-item"><a href="/static/challenge_files/{{challenge.slug}}/{{downloadable.file_name}}">{{downloadable.file_name}}</a></li>
-                                                {% endfor %}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h6 class="card-title">Challenge information:</h6>
-                                                <p class="card-text">
-                                                    Description: <br>
-                                                    {{challenge.desc}}<br>
-                                                    {{challenge.points}} Points {{challenge.solve_count}} Solves
-                                                </p>
-                                            </div>
-                                            <div class="card-footer text-body-secondary">
-                                                <a href="/admin/challenge/{{challenge.id}}">More information ></a>
+                                        <div class="col">
+                                            <div class="card">
+                                                <ul class="list-group list-group-flush">
+                                                    <li class="list-group-item">Downloadables:</li>
+                                                    {% for downloadable in challenge.downloadables %}
+                                                        <li class="list-group-item"><a href="/static/challenge_files/{{challenge.slug}}/{{downloadable.file_name}}">{{downloadable.file_name}}</a></li>
+                                                    {% endfor %}
+                                                </ul>
                                             </div>
                                         </div>
-                                    </div>
+                                        <div class="col">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h6 class="card-title">Challenge information:</h6>
+                                                    <p class="card-text">
+                                                        Description: <br>
+                                                        {{challenge.desc}}<br>
+                                                        {{challenge.points}} Points {{challenge.solve_count}} Solves
 
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" {% if challenge.hidden %} checked {% endif %}>
+                                                            <label class="form-check-label" for="flexSwitchCheckDefault">Hide Challenge</label>
+                                                        </div>
+                                                    </p>
+                                                </div>
+                                                <div class="card-footer text-body-secondary">
+                                                    <a href="/admin/challenge/{{challenge.id}}">More information ></a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
-            </div>
+                    {% endfor %}
+                </div>
+                <br>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

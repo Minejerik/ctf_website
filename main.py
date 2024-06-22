@@ -135,7 +135,9 @@ def inject_data():
         started=STARTED,
         ended=ENDED,
         ctf_name=CTF_NAME,
-        flag_template=flag_template
+        flag_template=flag_template,
+        config=config,
+        
     )   
 
 @app.template_filter('naturaltime')

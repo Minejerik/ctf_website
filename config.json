@@ -1,4 +1,9 @@
 {
     "ctf_name": "CTF Name",
-    "flag_template": "CTF_NAME{}"
+    "flag_template": "CTF_NAME{}",
+    "faq": {
+        "question1": "answer1",
+        "question2": "answer2",
+        "credit": "made w/ love by Minejerik"
+    }
 }

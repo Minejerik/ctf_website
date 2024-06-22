@@ -60,18 +60,20 @@ class User(db.Entity, UserMixin):
     username = Required(str)
     email = Required(str)
     password = Required(bytes)
-    user_id = Required(str)
+    pub_id = Required(str)
     admin = Required(bool, default=False)
     hidden = Required(bool, default=False)
 
     def get_id(self):
-        return self.user_id
+        return self.pub_id
 
 class Solve(db.Entity):
     id = PrimaryKey(int, auto=True)
     solver = Required(User)
     challenge = Required('Challenge')
     solvetime = Required(datetime)
+    pub_id = Required(str, default=str(uuid4()))
+    
 
 class Challenge(db.Entity):
     id = PrimaryKey(int, auto=True)
@@ -85,12 +87,14 @@ class Challenge(db.Entity):
     hidden = Required(bool, default=True)
     category = Optional('Category')
     downloadables = Set('Downloadable')
+    pub_id = Required(str, default=str(uuid4()))
     
 class Category(db.Entity):
     id = PrimaryKey(int, auto=True)
     name = Required(str)
     desc = Optional(str)
     challenges = Set(Challenge)
+    pub_id = Required(str, default=str(uuid4()))
 
 class Date(db.Entity):
     id = PrimaryKey(int, auto=True)
@@ -101,6 +105,7 @@ class Downloadable(db.Entity):
     id = PrimaryKey(int, auto=True)
     file_name = Required(str)
     challenge = Required(Challenge)
+    pub_id = Required(str, default=str(uuid4()))
 
 db.bind(provider="sqlite", filename="main.db", create_db=True)
 

@@ -5,6 +5,7 @@ from datetime import datetime
 
 from random import choice
 from slugify import slugify
+from uuid import UUID, uuid4
 
 db = Database()
 
@@ -15,7 +16,7 @@ class User(db.Entity):
     username = Required(str)
     email = Required(str)
     password = Required(bytes)
-    user_id = Required(str)
+    pub_id = Required(str, default=str(uuid4()))
     admin = Required(bool, default=False)
     hidden = Required(bool, default=False)
 
@@ -27,6 +28,7 @@ class Solve(db.Entity):
     solver = Required(User)
     challenge = Required('Challenge')
     solvetime = Required(datetime)
+    pub_id = Required(str, default=str(uuid4()))
 
 class Challenge(db.Entity):
     id = PrimaryKey(int, auto=True)
@@ -40,17 +42,20 @@ class Challenge(db.Entity):
     hidden = Required(bool, default=True)
     category = Optional('Category')
     downloadables = Set('Downloadable')
+    pub_id = Required(str, default=str(uuid4()))
     
 class Category(db.Entity):
     id = PrimaryKey(int, auto=True)
     name = Required(str)
     desc = Optional(str)
     challenges = Set(Challenge)
+    pub_id = Required(str, default=str(uuid4()))
     
 class Downloadable(db.Entity):
     id = PrimaryKey(int, auto=True)
     file_name = Required(str)
     challenge = Required(Challenge)
+    pub_id = Required(str, default=str(uuid4()))
 
 db.bind(provider="sqlite", filename="main.db", create_db=True)
 

@@ -60,7 +60,7 @@ class User(db.Entity, UserMixin):
     username = Required(str)
     email = Required(str)
     password = Required(bytes)
-    pub_id = Required(str)
+    pub_id = Required(str, default=str(uuid4()))
     admin = Required(bool, default=False)
     hidden = Required(bool, default=False)
 
@@ -155,7 +155,7 @@ def naturaltime_filter(s):
 @login_manager.user_loader
 def load_user(user_id):
     with db_session:
-        return User.get(user_id=user_id)
+        return User.get(pub_id=user_id)
     
 def admin_only(f):
     @wraps(f)
@@ -196,7 +196,7 @@ def adminuser():
 @app.route("/admin/user/<id>")
 @admin_only
 def adminusertag(id):
-    user = User[int(id)]
+    user = User.select(pub_id=id).first()
     if not user:
         abort(404)
     return render_template("admin/usertag.html", user=user)
@@ -312,7 +312,7 @@ def register():
         user = User(username=request.form.get("username"),
                     email=request.form.get("email"),
                     password=bcrypt.generate_password_hash(request.form.get("password")),
-                    user_id=str(uuid4()))
+                    )
         # Add the user to the database
         commit()
         # Once user account created, redirect them
@@ -338,10 +338,10 @@ def challenges():
     categories = list(Category.select())
     return render_template("challenges.html", challenges=challenges, categories=categories)
 
-@app.route("/challenge/<int:id>")
+@app.route("/challenge/<id>")
 @login_required
 def challenge(id):
-    challenge = Challenge[id]
+    challenge = Challenge.select(pub_id=id).first()
     if not challenge or challenge.hidden:
         abort(404)
     return render_template("challenge.html", challenge = challenge)
@@ -368,7 +368,7 @@ def api_challenge_submit():
 
 @app.route('/user/<id>')
 def userbyid(id):
-    user = User.select(id=id).first()
+    user = User.select(pub_id=id).first()
     if not user or user.hidden:
         abort(404)
     solves = list(user.solves)

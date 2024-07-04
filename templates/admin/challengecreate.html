@@ -1,0 +1,40 @@
+{% extends 'admin/adminbase.html' %}
+
+{% block title %}
+Admin Challenge Create
+{% endblock %}
+
+
+{% block content %}
+<br><br>
+<div class="container">
+    <div class="card">
+        <h6 class="card-header">Create Challenge</h6>
+        <div class="card-body">
+            <form action="/api/admin/challenge/create" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="challengeNameInput">Challenge name:</label>
+                    <input type="text" name="challenge_name" id="challengeNameInput" class="form-control" value="Unnamed Challenge">
+                </div>
+                <div class="mb-3">
+                    <label for="challengeDescInput">Challenge description:</label>
+                    <textarea type="text" name="challenge_desc" id="challengeDescInput" class="form-control">No description</textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="challengeFlagInput">Challenge flag:</label>
+                    <input type="text" name="challenge_flag" id="challengeFlagInput" class="form-control" value="{{flag_template}}" aria-describedby="challengeFlagInputNote">
+                    <div id="challengeFlagInputNote" class="form-text">This does not automatically use the provided flag format, make sure to add it manually.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="challengePointsInput">Challenge Point Amount:</label>
+                    <input type="number" name="challenge_points" id="challengePointsInput" class="form-control" value="100">
+                </div>
+                
+                <div class="mb-3">
+                    <input type="submit" value="Submit Changes" class="form-control">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

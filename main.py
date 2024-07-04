@@ -10,6 +10,7 @@ from flask_bcrypt import Bcrypt
 import nh3
 import json
 from humanize import naturaltime
+from slugify import slugify
 import os
 
 ## CHANGE LATER!!!
@@ -253,13 +254,22 @@ def adminchallengehiddentoggle():
     
     return redirect(url_for("adminchallenges"))
 
+@app.route('/admin/challenge/create')
+@admin_only
+def adminchallengecreate():
+    categories = list(Category.select())
+    return render_template("admin/challengecreate.html", categories=categories)
+
 @app.route("/api/admin/challenge/edit", methods=["POST"])
 @admin_only
 def adminchallengeeditapi():
     id = int(request.form.get("challenge_id"))
     challenge = Challenge[id]
     print(request.form)
-    challenge.name = request.form.get("challenge_name")
+    if request.form.get("challenge_name") != challenge.name:
+        os.rename(f"static/challenge_files/{challenge.slug}", f"static/challenge_files/{slugify(request.form.get('challenge_name'))}")
+        challenge.name = request.form.get("challenge_name")
+        challenge.slug = slugify(request.form.get("challenge_name"))
     challenge.desc = request.form.get("challenge_desc")
     challenge.flag = request.form.get("challenge_flag")
     challenge.points = int(request.form.get("challenge_points"))

@@ -260,6 +260,9 @@ def adminchallengeeditapi():
     challenge = Challenge[id]
     print(request.form)
     challenge.name = request.form.get("challenge_name")
+    challenge.desc = request.form.get("challenge_desc")
+    challenge.flag = request.form.get("challenge_flag")
+    challenge.points = int(request.form.get("challenge_points"))
     return redirect(url_for("adminchallengeedit", id=id))
 
 @app.route("/admin/etc", methods=["POST", "GET"])

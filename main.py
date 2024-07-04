@@ -214,7 +214,8 @@ def adminchallenges():
 @admin_only
 def adminchallengeedit(id):
     challenge = Challenge[int(id)]
-    return render_template("admin/challengeedit.html", challenge=challenge)
+    categories = list(Category.select())
+    return render_template("admin/challengeedit.html", challenge=challenge, categories=categories)
 
 @app.route("/api/admin/category/create", methods=["POST"])
 @admin_only
@@ -273,7 +274,13 @@ def adminchallengeeditapi():
     challenge.desc = request.form.get("challenge_desc")
     challenge.flag = request.form.get("challenge_flag")
     challenge.points = int(request.form.get("challenge_points"))
+    challenge.category = Category[int(request.form.get("challenge_category"))]
     return redirect(url_for("adminchallengeedit", id=id))
+
+@app.route("/api/admin/challenge/create", methods=["POST"])
+@admin_only
+def adminchallengecreateapi():
+    pass
 
 @app.route("/api/admin/challenge/downloadables/edit", methods=["POST"])
 @admin_only

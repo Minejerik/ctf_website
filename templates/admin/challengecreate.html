@@ -29,7 +29,19 @@ Admin Challenge Create
                     <label for="challengePointsInput">Challenge Point Amount:</label>
                     <input type="number" name="challenge_points" id="challengePointsInput" class="form-control" value="100">
                 </div>
-                
+                <div class="mb-3">
+                    <label for="challengeCategoryInput">Challenge Category:</label>
+                    <select name="challenge_category" id="challengeCategoryInput" class="form-control">
+                        {% for category in categories %}
+                        <option value="{{category.id}}">{{category.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <hr>
+                <div class="mb-3">
+                    <label for="DownloadableFilesUpload">Upload Downloadable(s)</label>
+                    <input type="file" name="files_upload" id="DownloadableFilesUpload" class="form-control" multiple>
+                </div>
                 <div class="mb-3">
                     <input type="submit" value="Submit Changes" class="form-control">
                 </div>

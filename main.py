@@ -208,6 +208,13 @@ def adminchallenges():
     categories = list(Category.select())
     return render_template("admin/challenges.html", challenges=challenges, categories=categories)
 
+
+@app.route("/admin/challenge/<int:id>")
+@admin_only
+def adminchallengeedit(id):
+    challenge = Challenge[int(id)]
+    return render_template("admin/challengeedit.html", challenge=challenge)
+
 @app.route("/api/admin/category/create", methods=["POST"])
 @admin_only
 def admincategorycreate():

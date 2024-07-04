@@ -253,6 +253,15 @@ def adminchallengehiddentoggle():
     
     return redirect(url_for("adminchallenges"))
 
+@app.route("/api/admin/challengeedit", methods=["POST"])
+@admin_only
+def adminchallengeeditapi():
+    id = int(request.form.get("challenge_id"))
+    challenge = Challenge[id]
+    print(request.form)
+    challenge.name = request.form.get("challenge_name")
+    return redirect(url_for("adminchallengeedit", id=id))
+
 @app.route("/admin/etc", methods=["POST", "GET"])
 @admin_only
 def adminetc():

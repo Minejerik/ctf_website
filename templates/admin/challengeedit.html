@@ -11,6 +11,7 @@ Admin Edit Challenge {{challenge.name}}
     <div class="row">
         <div class="col-5">
             <div class="card">
+                <h6 class="card-header">Main attributes:</h6>
                 <div class="card-body">
                     <form action="/api/admin/challengeedit" method="post">
                         <input type="hidden" name="challenge_id" value="{{challenge.id}}">
@@ -30,6 +31,9 @@ Admin Edit Challenge {{challenge.name}}
                         <div class="mb-3">
                             <label for="challengePointsInput">Challenge Point Amount:</label>
                             <input type="number" name="challenge_points" id="challengePointsInput" class="form-control" value="{{challenge.points}}">
+                        </div>
+                        <div class="mb-3">
+                            <input type="submit" value="Submit Changes" class="form-control">
                         </div>
                     </form>
                 </div>

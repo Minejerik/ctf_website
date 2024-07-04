@@ -7,6 +7,9 @@ from random import choice
 from slugify import slugify
 from uuid import UUID, uuid4
 
+for i in range(0, 10):
+    print(str(uuid4()))
+
 db = Database()
 
 class User(db.Entity):
@@ -61,7 +64,7 @@ db.bind(provider="sqlite", filename="main.db", create_db=True)
 
 db.generate_mapping(create_tables=True)
 
-set_sql_debug(True)
+# set_sql_debug(True)
 
 cats = []
 
@@ -76,7 +79,7 @@ with db_session:
     dates = []
     for i in range(0, 15):
         
-        ch = Challenge(flag=f"flag_{i}", name=f"test_challenge_{i}", desc=f"desc_{i}", category=choice(cats), points=100, hidden=False, slug=slugify(f"test_challenge_{i}"))
+        ch = Challenge(flag=f"flag_{i}", name=f"test_challenge_{i}", desc=f"desc_{i}", category=choice(cats), points=100, hidden=False, slug=slugify(f"test_challenge_{i}"), pub_id=str(uuid4()))
         for i2 in range(0, 5):
             ch.downloadables.create(file_name=f"file_{i}_{i2}")
             

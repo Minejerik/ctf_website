@@ -13,7 +13,7 @@ Admin Edit Challenge {{challenge.name}}
             <div class="card">
                 <h6 class="card-header">Main attributes:</h6>
                 <div class="card-body">
-                    <form action="/api/admin/challengeedit" method="post">
+                    <form action="/api/admin/challenge/edit" method="post">
                         <input type="hidden" name="challenge_id" value="{{challenge.id}}">
                         <div class="mb-3">
                             <label for="challengeNameInput">Challenge name:</label>
@@ -43,16 +43,29 @@ Admin Edit Challenge {{challenge.name}}
             <div class="card">
                 <h6 class="card-header">Downloadables edit:</h6>
                 <div class="card-body">
-                    <input type="hidden" name="challenge_id" value="{{challenge.id}}">
-                    <div class="mb-3">
-                        {% for downloadable in challenge.downloadables %}
+                    <form action="/api/admin/challenge/downloadables/edit" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="challenge_id" value="{{challenge.id}}">
+                        <div class="mb-3">
                             <div class="card">
+                                {%set sorted = challenge.downloadables | sort(attribute='id')%}
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">{{downloadable.file_name}}</li>
+                                    {% for downloadable in sorted %}
+                                    <li class="list-group-item">
+                                        {{downloadable.file_name}} &nbsp;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" name="{{downloadable.id}}">
+                                        <input type='hidden' value='off' name='{{downloadable.id}}'>
+                                        <label class="form-check-label" for="flexSwitchCheckDefault">Delete Downloadable</label>
+                                    </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
-                        {% endfor %}
-                    </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="DownloadableFilesUpload">Upload Downloadable(s)</label>
+                            <input type="file" name="files_upload" id="DownloadableFilesUpload" class="form-control" multiple>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

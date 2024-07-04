@@ -52,9 +52,9 @@ Admin Edit Challenge {{challenge.name}}
                                     {% for downloadable in sorted %}
                                     <li class="list-group-item">
                                         {{downloadable.file_name}} &nbsp;&nbsp;&nbsp;
-                                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" name="{{downloadable.id}}">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="{{downloadable.id}}_delete" name="{{downloadable.id}}">
                                         <input type='hidden' value='off' name='{{downloadable.id}}'>
-                                        <label class="form-check-label" for="flexSwitchCheckDefault">Delete Downloadable</label>
+                                        <label class="form-check-label" for="{{downloadable.id}}_delete">Delete Downloadable</label>
                                     </li>
                                     {% endfor %}
                                 </ul>
@@ -64,6 +64,10 @@ Admin Edit Challenge {{challenge.name}}
                         <div class="mb-3">
                             <label for="DownloadableFilesUpload">Upload Downloadable(s)</label>
                             <input type="file" name="files_upload" id="DownloadableFilesUpload" class="form-control" multiple>
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="submit" value="Submit Changes" class="form-control">
                         </div>
                     </form>
                 </div>

@@ -265,6 +265,46 @@ def adminchallengeeditapi():
     challenge.points = int(request.form.get("challenge_points"))
     return redirect(url_for("adminchallengeedit", id=id))
 
+@app.route("/api/admin/challenge/downloadables/edit", methods=["POST"])
+@admin_only
+def adminchallengedownloadablesedit():
+    id = int(request.form.get("challenge_id"))
+    challenge = Challenge[id]
+    os.makedirs(f"static/challenge_files/{challenge.slug}", exist_ok=True)
+    dls = []
+    
+    files = request.files.getlist("files_upload")
+    
+    if files[0].filename != "":
+        for file in files:
+            file.save(f"static/challenge_files/{challenge.slug}/{file.filename}")
+            dls.append(Downloadable(file_name=file.filename, challenge=challenge))
+
+    forms = request.form.copy()
+    
+    forms.pop("challenge_id")
+    
+    print(forms)
+    
+    already_done = []
+    
+    for key in forms:
+        if key in already_done:
+            continue
+        already_done.append(key)
+        
+        if forms[key] == 'on':
+            file_name = Downloadable[int(key)].file_name
+            
+            if os.path.exists(f"static/challenge_files/{challenge.slug}/{file_name}"):
+                os.remove(f"static/challenge_files/{challenge.slug}/{file_name}")
+                
+            Downloadable[int(key)].delete()
+            
+        
+    commit()
+    return redirect(url_for("adminchallengeedit", id=id))
+
 @app.route("/admin/etc", methods=["POST", "GET"])
 @admin_only
 def adminetc():

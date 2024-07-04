@@ -1,3 +1,4 @@
 main.db
 .env
 __pycache__
+static

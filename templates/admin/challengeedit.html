@@ -39,6 +39,23 @@ Admin Edit Challenge {{challenge.name}}
                 </div>
             </div>
         </div>
+        <div class="col">
+            <div class="card">
+                <h6 class="card-header">Downloadables edit:</h6>
+                <div class="card-body">
+                    <input type="hidden" name="challenge_id" value="{{challenge.id}}">
+                    <div class="mb-3">
+                        {% for downloadable in challenge.downloadables %}
+                            <div class="card">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">{{downloadable.file_name}}</li>
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

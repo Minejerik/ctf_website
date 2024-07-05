@@ -12,6 +12,7 @@ import json
 from humanize import naturaltime
 from slugify import slugify
 import os
+from flask_wtf.csrf import CSRFProtect
 
 ## CHANGE LATER!!!
 ## TODO: REMEMBER
@@ -40,6 +41,8 @@ scheduler = APScheduler()
 db = Database()
 
 bcrypt = Bcrypt(app)
+
+csrf = CSRFProtect(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -448,7 +451,6 @@ def challenge(id):
 @app.route("/api/challenge/submission", methods=["POST"])
 @login_required
 def api_challenge_submit():
-    print(request.json)
     id = request.json.get("id")
     challenge = Challenge[id]
     if not challenge or challenge.hidden:

@@ -12,6 +12,7 @@ Admin Challenge Create
         <h6 class="card-header">Create Challenge</h6>
         <div class="card-body">
             <form action="/api/admin/challenge/create" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <div class="mb-3">
                     <label for="challengeNameInput">Challenge name:</label>
                     <input type="text" name="challenge_name" id="challengeNameInput" class="form-control" value="Unnamed Challenge">

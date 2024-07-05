@@ -14,6 +14,7 @@ Home
     <div class="row">
         <div class="col">
           <form action="" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
                 <input type="text" class="form-control" id="username" value="{{current_user.username}}" name="username">

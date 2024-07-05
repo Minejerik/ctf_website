@@ -36,6 +36,7 @@ Admin Challenges
         </div>
         <div class="col">
             <form action="/api/admin/challenge/hiddentoggle" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <div class="accordion" id="challengeAccordian">
                     {% for challenge in challenges %}
                         <div class="accordion-item">
@@ -101,12 +102,14 @@ async function handle_request_async() {
     const new_category = document.getElementById("new_category")
 
     const new_category_string = new_category.value
+    const csrf = "{{ csrf_token() }}"
 
     let resp = await fetch("/api/admin/category/create", {
         method: "POST",
         cache: "no-cache",
         headers: {
             "Content-Type": "application/json",
+            'X-CSRF-TOKEN': csrf
         },
         body: JSON.stringify({category_name:new_category_string})
     })

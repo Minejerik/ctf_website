@@ -9,6 +9,7 @@ Admin ETC
 <br><br>
 <div class="container">
     <form action="/admin/etc" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <label class="form-control" for="start_time_and_date">Start time and date:</label><br>
         <input class="form-control" type="datetime-local" name="start_time_and_date" id="start_time_and_date" value="{{start.isoformat()}}"><br><br>
         <label class="form-control" for="end_time_and_date">End time and date:</label><br>

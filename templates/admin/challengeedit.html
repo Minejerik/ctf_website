@@ -14,6 +14,7 @@ Admin Edit Challenge {{challenge.name}}
                 <h6 class="card-header">Main attributes:</h6>
                 <div class="card-body">
                     <form action="/api/admin/challenge/edit" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <input type="hidden" name="challenge_id" value="{{challenge.id}}">
                         <div class="mb-3">
                             <label for="challengeNameInput">Challenge name:</label>
@@ -53,6 +54,7 @@ Admin Edit Challenge {{challenge.name}}
                 <div class="card-body">
                     <form action="/api/admin/challenge/downloadables/edit" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="challenge_id" value="{{challenge.id}}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <div class="mb-3">
                             <div class="card">
                                 {%set sorted = challenge.downloadables | sort(attribute='id')%}

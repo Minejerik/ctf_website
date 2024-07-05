@@ -280,7 +280,30 @@ def adminchallengeeditapi():
 @app.route("/api/admin/challenge/create", methods=["POST"])
 @admin_only
 def adminchallengecreateapi():
-    pass
+    challenge = Challenge(flag=request.form.get("challenge_flag"),
+                            name=request.form.get("challenge_name"),
+                            desc=request.form.get("challenge_desc"),
+                            points=int(request.form.get("challenge_points")),
+                            category=Category[int(request.form.get("challenge_category"))],
+                            slug=slugify(request.form.get("challenge_name")),
+                            pub_id=str(uuid4()),
+                            hidden=True)
+    
+    os.makedirs(f"static/challenge_files/{challenge.slug}", exist_ok=True)
+    
+    dls = []
+    files = request.files.getlist("files_upload")
+    
+    if files[0].filename != "":
+        for file in files:
+            file.save(f"static/challenge_files/{challenge.slug}/{file.filename}")
+            dls.append(Downloadable(file_name=file.filename, challenge=challenge))
+            
+    commit()
+    return redirect(url_for("adminchallenges"))
+    
+    
+    
 
 @app.route("/api/admin/challenge/downloadables/edit", methods=["POST"])
 @admin_only

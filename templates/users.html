@@ -21,5 +21,15 @@ Users
         <h1>No Users!</h1>
         {% endif %}
       </div>
+    <br>
+    <div class="btn-group">
+        {% if page == 0 %}
+        <a href="#" class="btn btn-primary disabled" aria-disabled="true"><</a>
+        {% else %}
+        <a href="/users/{{page-1}}" class="btn btn-primary"><</a>
+        {% endif %}
+        <a class="btn btn-primary">Page - {{page+1}}</a>
+        <a href="/users/{{page+1}}" class="btn btn-primary">></a>
+    </div>
 </div>
 {% endblock %}

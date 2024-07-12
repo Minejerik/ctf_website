@@ -426,11 +426,12 @@ def register():
 @app.route('/users')
 def users():
     users = User.select(hidden=False)[0:50]
-    return render_template('users.html', users=users)
+    return render_template('users.html', users=users, page=0)
 
-@app.route('/users/<page>')
+@app.route('/users/<int:page>')
 def userpage(page):
-    users = User.select(hidden=False)[0*page:50*page]
+    start = 50*page
+    users = User.select(hidden=False)[start:start+50]
     return render_template('users.html', users=users, page=page)
 
 @app.route("/challenges")

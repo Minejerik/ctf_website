@@ -14,7 +14,7 @@ Users
         {% if users | length > 0 %}
         <ul class="list-group list-group-flush">
             {% for user in users %} 
-            <li class="list-group-item"><a href="/user/{{user.pub_id}}">{{user.username}}</a></li>
+            <li class="list-group-item"><a href="/user/{{user.pub_id}}">{{user.username}} - {{user.points}} points - {{user.solves | length}} Solves</a></li>
             {% endfor %}
         </ul>
         {% else %}

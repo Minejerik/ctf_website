@@ -8,13 +8,30 @@ Admin ETC
 {% block content %}
 <br><br>
 <div class="container">
-    <form action="/admin/etc" method="post">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        <label class="form-control" for="start_time_and_date">Start time and date:</label><br>
-        <input class="form-control" type="datetime-local" name="start_time_and_date" id="start_time_and_date" value="{{start.isoformat()}}"><br><br>
-        <label class="form-control" for="end_time_and_date">End time and date:</label><br>
-        <input class="form-control" type="datetime-local" name="end_time_and_date" id="end_time_and_date" value="{{end.isoformat()}}"><br><br>
-        <input class="form-control" type="submit" value="submit">
-    </form>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/admin/etc" method="post">
+                        <div class="row">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                <div class="col-2">
+                                    <label class="" for="start_time_and_date">Start time:</label><br><br><br>
+                                    <label class="" for="end_time_and_date">End time:</label>
+                                </div>
+                                <div class="col">
+                                    <input class="form-control" type="datetime-local" name="start_time_and_date" id="start_time_and_date" value="{{start.isoformat()}}"><br>
+                                    <input class="form-control" type="datetime-local" name="end_time_and_date" id="end_time_and_date" value="{{end.isoformat()}}">
+                                </div>
+                        </div>
+                        <br>
+                        <input class="form-control" type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
 </div>
 {% endblock %}

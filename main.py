@@ -269,7 +269,6 @@ def adminchallengecreate():
 def adminchallengeeditapi():
     id = int(request.form.get("challenge_id"))
     challenge = Challenge[id]
-    print(request.form)
     if request.form.get("challenge_name") != challenge.name:
         os.rename(f"static/challenge_files/{challenge.slug}", f"static/challenge_files/{slugify(request.form.get('challenge_name'))}")
         challenge.name = request.form.get("challenge_name")
@@ -327,8 +326,6 @@ def adminchallengedownloadablesedit():
     
     forms.pop("challenge_id")
     
-    print(forms)
-    
     already_done = []
     
     for key in forms:
@@ -377,8 +374,6 @@ def logout():
 @login_required
 def settings():
     if request.method == "POST":
-        print(current_user)
-        print(request.form)
         if not bcrypt.check_password_hash(current_user.password, request.form.get("currentPassword")):
             return render_template("settings.html", error="Incorrect Password!")
         if current_user.username != request.form.get("username"):

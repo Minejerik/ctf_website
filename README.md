@@ -2,7 +2,7 @@
 
 ![wakapi](https://wakapi.dev/api/badge/minejerik/interval:any/project:ctf_website)
 
-Is in development and will be used for my unnamed CTF in september
+Is in development.
 
 
 # How to run:

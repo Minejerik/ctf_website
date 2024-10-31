@@ -124,10 +124,10 @@ with db_session:
         START_DATE = list(Date.select(name="start"))[0].date
         END_DATE = list(Date.select(name="end"))[0].date
     except:
-        raise Exception("RUN add_dates.py FIRST!!!")
+        raise Exception("RUN add_dates.py FIRST!!!") 
 
 STARTED = (datetime.now() >= START_DATE)
-ENDED = (STARTED and datetime.now <= END_DATE)
+ENDED = (STARTED and datetime.now() <= END_DATE)
 
 @scheduler.task('interval', id='check_if_started_task', seconds=10)
 def check_if_started():
@@ -241,12 +241,15 @@ def admincategorycreate():
 def adminchallengehiddentoggle():
     
     already_done = []
+    # print(request.form)
     
     for key in request.form:
         
-        if key in already_done:
+        if key in already_done or key == "csrf_token":
             continue
         
+        # print(key)
+
         already_done.append(key)
         
         temp = Challenge[int(key)]

@@ -7,3 +7,6 @@ flask_bcrypt
 nh3
 python-slugify
 flask_wtf
+humanize
+python-dotenv
+flask_debugtoolbar
